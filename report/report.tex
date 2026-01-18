@@ -1,0 +1,874 @@
+\documentclass{article}
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2024
+
+
+% ready for submission
+%\usepackage{neurips_2024}
+\usepackage{graphicx}   % <--- 必须改为 graphicx
+\usepackage{amsmath}
+\usepackage{subcaption} % <--- 确保这一行也在，否则子图无法运行
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%\usepackage[preprint]{neurips_2024}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+     \usepackage[final]{neurips_2024}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2024}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+\usepackage{subcaption}
+
+
+\title{Visual Illusion Generation System Based on Diffusion Models}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{%
+  Zihan Yang \\
+  EECS, Peking University \\
+  \texttt{email} \\
+  \And
+  Yuming Fang \\
+  EECS, Peking University \\
+  \texttt{email} \\
+  \And
+  Yueran Wang \\
+  SMS, Peking University \\
+  \texttt{email} \\
+}
+
+
+\begin{document}
+
+
+\maketitle
+
+
+\begin{abstract}
+  For this Computer Vision final project, we selected the topic of Creating Visual
+  Cognitive Illusions for our experimentation.This paper presents an in-depth study on visual illusion generation using diffusion models. Building upon the reproduction and analysis of the existing Diffusion Illusion model, we identified its implementation flaws and theoretical limitations regarding complex geometric transformations and multi-stable perception. To address these issues, we constructed an Enhanced Illusion Generation Framework. By leveraging the generative prior of Score Distillation Sampling (SDS) and integrating a novel set of differentiable transformation operators into the optimization loop, our framework enables the decoupled optimization of image parameters across frequency domains, color spaces, and geometric perspectives. We successfully extended and implemented [7] distinct categories of visual illusions, including multi-scale hybrids, color-channel separation, cross-modal color-grayscale camouflage, and motion-induced parallax.To enhance reproducibility and interactivity, we developed a dedicated project homepage and an online execution environment. Experimental results demonstrate that our method significantly expands the flexibility and quality of generative illusions, providing new technical avenues for interactive art creation and multi-modal information hiding.
+  
+\end{abstract}
+
+
+\section{Introduction}
+
+Visual illusions—images designed to deceive the human visual system—encompass various categories, including ambiguous illusions, geometric-optical illusions, and motion illusions. Historically, they have remained a focal point of research in both psychology and computer graphics. In recent years, Diffusion Models have demonstrated exceptional capability in modeling complex distributions. Their scope of application has expanded far beyond mere image synthesis, extending to general robotic action trajectory generation\cite{chi2025diffusion} and Sim-to-Real navigation strategies (e.g., NavDP\cite{cai2025navdp}). However, despite the revolutionary breakthroughs Generative AI has brought to image creation, precise control over the geometric features and semantic attributes required for visual illusions remains a significant challenge.
+
+Building upon the "Diffusion Illusion" framework by Ryan\cite{10.1145/3641519.3657500}, we identified theoretical limitations in existing models, specifically their restriction to a narrow range of illusion types and their reliance solely on text-based inputs. To address this, we focus on ambiguous illusions and extend the framework by incorporating an image-guidance mechanism and a suite of differentiable transformation operators. This approach not only enriches the diversity of generatable illusions but also supports user-supplied reference images. Specifically, we have implemented the following effects:
+
+\textbf{Contributions.} Our main contributions are summarized as follows:
+
+\begin{itemize}
+    \item \textbf{Reproduction and Enhancement:} We successfully reproduced the three baseline illusions from the original \emph{Diffusion Illusions} framework and introduced critical improvements to their stability and visual quality, addressing limitations in the original implementation.
+    
+    \item \textbf{Automated Evaluation Pipeline:} We constructed a novel closed-loop pipeline that integrates automated generation with Vision-Language Model (VLM) based scoring. This system enables the objective quantification of illusion effectiveness and facilitates the high-throughput screening of optimal samples, replacing subjective manual selection.
+    
+    \item \textbf{Physical World Validation:} We bridged the gap between digital synthesis and physical perception by printing our generated samples. Experiments confirm that our illusions—particularly the cylindrical anamorphosis and hybrid images—maintain their perceptual efficacy in real-world environments under varying viewing conditions.
+    
+    \item \textbf{Framework Abstraction and Extension:} We formalized the previous specific implementations into a \textbf{Unified Multi-View Optimization Framework}. Based on this abstraction, we significantly expanded the solution space by introducing eight novel illusion categories, the implementation details of which are comprehensively described in Section \ref{sec:method}.
+\end{itemize}
+
+
+\section{Related Work}
+\label{related_work}
+
+\subsection{Traditional Methods and Controlled Generation}
+
+Early illusion generation relied heavily on frequency analysis or manual geometric design. Oliva\cite{10.1145/1141911.1141919}.'s Hybrid Images exploited multi-scale perception to blend frequency bands, while works on Camouflage and Anamorphosis \cite{chu2010camouflage} focused on texture optimization and geometric projection. With the rise of generative AI, methods like ControlNet\cite{zhao2023uni} and Illusion Diffusion\cite{10.1145/3641519.3657500} enabled the embedding of hidden patterns (e.g. QR codes) via spatial conditioning. However, these inference-based approaches often struggle to generate multi-stable illusions that require consistency across varying viewpoints or frequency domains.
+
+\subsection{Optimization-based Paradigms}
+
+To overcome single-view limitations, optimization-based frameworks leverage Score Distillation Sampling (SDS) to enforce multi-view consistency. Diffusion Illusions\cite{10.1145/3641519.3657500} pioneered optimizing a single image against prompts under affine transformations. Visual Anagrams\cite{geng2024visual} extended this using pixel-space models for rearrangement illusions, while DreamFusion\cite{poole2022dreamfusion} applied SDS to 3D generation. Our work builds on these foundations but introduces specialized decoupling operators for frequency and color spaces, addressing the limitations of current methods in handling multi-scale and cross-modal illusions.
+
+\section{Data}
+\label{data}
+
+
+As our method is a zero-shot optimization approach, we do not require a traditional training dataset. Instead, we utilize:
+
+Pre-trained Model: Stable Diffusion (based on the work of Diffusion Illusion\cite{10.1145/3641519.3657500}) acts as the source of visual knowledge and DeepFloyd IF.
+
+Input Prompts: beyond the example prompts provided by the original paper’s authors, we carefully designed a series of prompts with striking contrasts for illusion generation, which yielded favorable results. In addition, we incorporated images generated by nanobanana as prompt inputs and embedded them into the illusions.
+
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Unified Multi-View Optimization Framework}
+
+This study is deeply inspired by "Diffusion Illusions" proposed by Burgert\cite{10.1145/3641519.3657500} Through an in-depth analysis of the original code, we abstract and formalize the generation process of such visual illusions into a \textbf{Unified Multi-View Optimization Framework}.
+
+We parameterize the object to be optimized as $\theta$ (which can be a single image, multi-layer textures, or a 3D voxel grid). We define a set of differentiable transformation functions $\mathcal{T} = \{T_1, \dots, T_K\}$, where each $T_k$ represents a specific physical observation modality or image processing operation. Our objective is to find a parameter set $\theta$ such that all transformed views $v_k = T_k(\theta)$ simultaneously satisfy their respective target constraints $y_k$.
+
+The general pseudocode for this framework is presented in Algorithm~\ref{alg:framework}.
+
+\begin{algorithm}[t]
+\caption{Unified Framework for Diffusion-Based Visual Illusions}
+\label{alg:framework}
+\begin{algorithmic}[1]
+% 在 REQUIRE 中增加了 total iterations T
+\REQUIRE Pre-trained Diffusion Model $\epsilon_\phi$, Set of Transformations $\mathcal{T} = \{T_1, \dots, T_K\}$, Set of Targets $\mathcal{Y} = \{y_1, \dots, y_K\}$, Total iterations $T$
+\STATE \textbf{Initialize:} Learnable parameters $\theta$ (e.g., Fourier features, voxel grid, or texture layers)
+\STATE \textbf{Optimizer:} Initialize optimizer (e.g., Adam, SGD) for $\theta$
+% --- 修改开始：将 While 改为 For ---
+\FOR{$t = 1$ to $T$}
+    \STATE $x \leftarrow \text{Construct}(\theta)$ \COMMENT{Synthesize base object from parameters}
+    \STATE $\mathcal{L}_{\text{total}} \leftarrow 0$
+    \FOR{$k = 1$ to $K$}
+        \STATE $v_k \leftarrow T_k(x)$ \COMMENT{Apply differentiable transformation}
+        \IF{$y_k$ is a Text Prompt}
+            % 这里可以对应你代码中的 model_sd.train_step
+            \STATE $\mathcal{L}_k \leftarrow \mathcal{L}_{\text{SDS}}(v_k, y_k, \epsilon_\phi)$ 
+        \ELSIF{$y_k$ is a Target Image}
+            % 这里对应你代码中的 loss_secret (MSE)
+            \STATE $\mathcal{L}_k \leftarrow ||v_k - y_k||^2_2$ 
+        \ENDIF
+        \STATE $\mathcal{L}_{\text{total}} \leftarrow \mathcal{L}_{\text{total}} + \lambda_k \cdot \mathcal{L}_k$
+    \ENDFOR
+    \STATE $\theta \leftarrow \theta - \eta \cdot \nabla_\theta \mathcal{L}_{\text{total}}$ \COMMENT{Update parameters via backpropagation}
+\ENDFOR
+% --- 修改结束 ---
+\RETURN Optimized object $x$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Baseline Implementation}
+We first summarize the three baseline implementations by Burgert\cite{10.1145/3641519.3657500}, which constitute special cases of this framework:
+
+\begin{itemize}
+    \item \textbf{Flippy Illusion:} $\theta$ is a single image. The transformation $T$ is a $180^\circ$ rotation. The image conforms to two distinct text descriptions when viewed upright and inverted.
+    \item \textbf{Rotation Overlays:} $\theta$ contains top and bottom image layers. The transformation $T$ is defined as the superposition product of the two layers, where the top layer is rotated by multiples of $90^\circ$.
+    \item \textbf{Hidden Characters:} $\theta$ consists of four independent images. The transformation $T$ is the pixel-wise product of the four images, revealing hidden information upon superposition.
+\end{itemize}
+
+\subsection{Our Improvements}
+Based on the unified framework described above, we expanded the boundaries of the transformation function $T(\cdot)$ and proposed eight novel visual illusion applications.
+
+\begin{enumerate}
+    \item \textbf{Image-Driven Hard Constraint Optimization:} Addressing the limitation of the original framework which relied solely on stochastic text prompts (via SDS Loss), we introduced a deterministic image-guidance mechanism. By incorporating a pixel-wise Mean Squared Error (MSE) loss into the optimization loop, we allow the system to use user-provided images as rigid targets. This enables precise control over the generated illusion, such as forcing the superposition of multiple layers to reconstruct a specific logo or reference image rather than a generic semantic concept (Figure \ref{fig:imp1}).
+
+    \item \textbf{Multi-Angle Moire Cryptography:} Unlike the rigid 90-degree rotation in the baseline, we introduce arbitrary affine transformations combined with specific target MSE constraints. We optimize a dual-layer texture structure (Base Layer and Decoder Layer) such that when superimposed at specific angles ($0^\circ, 120^\circ, 240^\circ$), high-frequency texture interference (Moiré effect) accurately decodes distinct hidden visual symbols, achieving rotation-angle-based visual decryption (Figure \ref{fig:imp2}).
+
+    \item \textbf{Differentiable Cylindrical Anamorphosis:} We design $T$ as an optical mapping function simulating cylindrical reflection. Using differentiable Grid Sample techniques, we map the planar canvas to the cylindrical mirror coordinate system. During optimization, the original canvas is constrained to exhibit abstract textures formed by stretching, while the reflected image after $T_{\text{mirror}}$ transformation is constrained to exhibit concrete target images. This achieves inverse rendering of physical optics (Figure \ref{fig:imp3}).
+
+    \item \textbf{Motion Integration Steganography:} Leveraging the persistence of vision effect, we define $T$ as the directional motion blur convolution kernel. The optimization goal is to make the static image present a visible high-frequency texture, while the blurred image after rapid shaking (simulated convolution) reveals a hidden target. This effectively encodes target information into the image's noise patterns, which is decodable only under temporal integration (Figure \ref{fig:imp4}).
+
+    \item \textbf{Orthogonal Voxel Projection Synthesis:} We elevate $\theta$ to a $64^3$ resolution 3D Voxel Grid. The transformation $T$ is defined as volume projection (Mean Projection) along the three orthogonal axes X, Y, and Z. This allows us to decompose the 3D generation problem into three 2D diffusion guidance problems, thereby generating an ``impossible'' 3D structure that presents completely different objects from different orthogonal perspectives (Figure \ref{fig:imp5}).
+
+    \item \textbf{Distance-Dependent Spectral Hybridization:} Inspired by Hybrid Images theory, we explicitly decompose $\theta$ into multiple frequency layers. $T$ is a set of Gaussian filters with different $\sigma$ (low-pass, band-pass, high-pass). We separately optimize low-frequency (far view), mid-frequency (mid view), and high-frequency (near view) components to correspond to different semantic descriptions. This achieves continuous semantic transition based on viewing distance within a single image (Figure \ref{fig:imp6}).
+
+    \item \textbf{Cross-Domain Luminance Decoupling:} Utilizing the orthogonality of color perception, we define $T$ as the luminance conversion formula from RGB to grayscale ($Y = 0.299R + 0.587G + 0.114B$). We simultaneously impose uncorrelated semantic constraints on the original color image and the transformed grayscale image. Through optimization, we generate visual adversarial images that present one object in color mode but abruptly mutate into another in desaturated (black and white) mode (Figure \ref{fig:imp7}).
+
+    \item \textbf{Intra-Channel Frequency Splitting:} We refine the frequency separation strategy into the RGB channels. The transformation $T$ extracts high and low-frequency components for each of the R, G, and B channels. This allows us to encode non-interfering visual information separately within the macro color block distribution (low frequency) and micro detail textures (high frequency) of the same color image, achieving finer texture nesting than traditional hybrid images (Figure \ref{fig:imp8}).
+\end{enumerate}
+
+\begin{figure}[t]
+    \centering
+    % --- 第一排 (Row 1): 3 Images ---
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/1for8.pdf} 
+        \caption{Hidden QR Code}
+        \label{fig:imp1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/2for8.pdf}
+        \caption{RGB Moire Cryptography}
+        \label{fig:imp2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/3for8.pdf}
+        \caption{Cylindrical Anamorphosis}
+        \label{fig:imp3}
+    \end{subfigure}
+    
+    \vspace{1em} % 行间距
+
+    % --- 第二排 (Row 2): 3 Images ---
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/4for8.pdf}
+        \caption{Motion Steganography}
+        \label{fig:imp4}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/5for8.pdf}
+        \caption{Orthogonal 3D Projection}
+        \label{fig:imp5}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/6for8.pdf}
+        \caption{Hybrid Expression}
+        \label{fig:imp6}
+    \end{subfigure}
+
+    \vspace{1em} % 行间距
+
+    % --- 第三排 (Row 3): 2 Images (Centered) ---
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/7for8.pdf}
+        \caption{Color-Grayscale Switch}
+        \label{fig:imp7}
+    \end{subfigure}
+    \hspace{0.02\linewidth} % 两图之间的微小间距
+    \begin{subfigure}[b]{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/8for8.pdf}
+        \caption{Color Temperature Shift}
+        \label{fig:imp8}
+    \end{subfigure}
+
+    \caption{\textbf{Gallery of Generated Illusions.} We demonstrate eight distinct visual illusion categories enabled by our unified framework. 
+    (a) Four images (Miku, Frog, Cat, Giraffe) superimposed to form a functional QR code for our project homepage. 
+    (b) Two layers reveal a red "PKU", green "EECS", and blue "SMS" logo when superimposed at $0^\circ$, $120^\circ$, and $240^\circ$ respectively. 
+    (c) (Left) The planar "starry sky" canvas. (Center) The reflection visible on the cylindrical mirror. (Right) The target image (movie poster from \textit{Your Name}). 
+    (d) (Left) Image of buildings. (Center) The effect after simulated shaking (motion blur). (Right) The target image (a rose). 
+    (e) A generated 3D asset appearing as a butterfly, a tree, and an apple from three orthogonal viewing directions. 
+    (f) (Left) A non-smiling person. (Right) The downscaled version appears to be smiling. 
+    (g) (Left) A colorful landscape with a river and mountains. (Right) The grayscale version reveals a tiger. 
+    (h) (Left) The image shows cool color tones. (Right) The downscaled version shifts to warm color tones.}
+    \label{fig:all_methods}
+\end{figure}
+
+\section{Experiments}
+
+\subsection{Experimental Settings}
+To evaluate the quality of visual illusions generated by Diffusion Models, one viable approach is to employ Vision Language Models (VLMs) to verify whether the generated illusion images convey the intended semantics. Several studies have explored this direction, such as \emph{IllusionVQA} \cite{shahgir2024illusionvqa} and \emph{GVIL} \cite{zhang2023grounding}.
+
+In this assignment, we designed an automated pipeline for the generation and evaluation of visual illusions. The framework of this pipeline consists of two main stages: automated generation using Diffusion Models and intelligent evaluation using VLMs. Under this framework, we evaluated and analyzed two types of illusions:
+\begin{enumerate}
+    \item \textbf{Text Flip Illusion (Ambigrams):} An image that reveals one string of text when viewed upright and a different string when rotated by 180 degrees \cite{geng2024visual}.
+    \item \textbf{Hybrid Illusion:} As described in Section \ref{sec:methods}, where perception changes based on frequency or color modality.
+\end{enumerate}
+
+\subsection{Pipeline Architecture and Implementation}
+Our experimental pipeline operates in two sequential stages, each equipped with dedicated scripts and producing structured output files. All scripts, experimental results (including generated images), natural language evaluations from the VLM, and numerical scores (stored as JSON files) have been uploaded to our project's GitHub repository.
+
+\textbf{Stage 1: Automated Generation.}
+For the Text Flip Illusion, we utilized DeepFloyd IF as the backbone model due to its superior character generation capabilities. For the Hybrid/Blurry Illusions, we employed Stable-Diffusion-v1-4. The generation process yields a structured output directory containing all candidate image samples.
+
+\textbf{Stage 2: VLM-Based Intelligent Evaluation.}
+Each generated candidate image was evaluated using \textbf{Qwen3-VL-4B-Instruct}, a Vision Language Model capable of understanding both visual content and text. To ensure objectivity, we implemented a "blind test" strategy where the VLM performs recognition without prior knowledge of the target words.
+
+\subsection{Experimental Results}
+For the Text Flip Illusion, we conducted experiments on two word pairs: (EECS, SMS) and (ICS, LOVE). We generated 3,333 candidate images for the (EECS, SMS) pair and 1,923 candidates for the (ICS, LOVE) pair. Additionally, for the Hybrid Illusion, we prepared a pool of 20 pre-defined prompts; for each generation, a prompt was randomly selected from this pool, resulting in a total of 100 sets of generated images. Due to space constraints, we present only the most representative experimental results below.
+
+Table \ref{tab:score_dist} illustrates the score distribution for the (EECS, SMS) pair. As observed, generating high-quality visual illusions of this type presents significant difficulty, with only a very small fraction of samples aligning well with the prompt. Figure \ref{fig:samples} (below) displays three sets of generated images which received VLM scores of 0, 5, and 9 respectively, clearly demonstrating the disparity in generation quality.
+
+\begin{table}[h]
+  \caption{VLM Score Distribution for (EECS, SMS) Illusion Generation}
+  \label{tab:score_dist}
+  \centering
+  % 使用 small 字体确保宽度适应，同时设置两组数据列
+  \small
+  \begin{tabular}{ccc @{\hskip 1cm} ccc}
+    \toprule
+    % 表头：左边一组，右边一组
+    VLM Score & Count & Percentage & VLM Score & Count & Percentage \\
+    \cmidrule(r){1-3} \cmidrule(l){4-6}
+    
+    % 数据行：手动将原来的19行数据拆分为左右两列
+    0.0 & 1,171 & 35.1\% & 5.0 & 68 & 2.0\% \\
+    0.5 & 36    & 1.1\%  & 5.5 & 15 & 0.5\% \\
+    1.0 & 143   & 4.3\%  & 6.0 & 106& 3.2\% \\
+    1.5 & 50    & 1.5\%  & 6.5 & 28 & 0.8\% \\
+    2.0 & 77    & 2.3\%  & 7.0 & 193& 5.8\% \\
+    2.5 & 26    & 0.8\%  & 7.5 & 666& 20.0\% \\
+    3.0 & 75    & 2.3\%  & 8.0 & 462& 13.9\% \\
+    3.5 & 15    & 0.5\%  & 8.5 & 181& 5.4\% \\
+    4.0 & 58    & 1.7\%  & 9.0 & 4  & 0.1\% \\
+    4.5 & 13    & 0.4\%  &     &    &       \\ % 最后一行右边留空
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[h]
+  \centering
+  %--- 子图 1 (Score 0) ---
+  \begin{subfigure}[b]{0.32\linewidth}
+    \centering
+    % 注意：将[参数]和{文件名}放在同一行，防止报错
+    \includegraphics[width=\linewidth]{figures/sample_256_views_bad.png}
+    \caption{Score 0 Sample}
+    \label{fig:score0}
+  \end{subfigure}
+  \hfill % 在子图之间添加弹性间距
+  %--- 子图 2 (Score 5) ---
+  \begin{subfigure}[b]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/sample_256_views_medium.png}
+    \caption{Score 5 Sample}
+    \label{fig:score5}
+  \end{subfigure}
+  \hfill % 在子图之间添加弹性间距
+  %--- 子图 3 (Score 9) ---
+  \begin{subfigure}[b]{0.32\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/sample_256_views_good.png}
+    \caption{Score 9 Sample}
+    \label{fig:score9}
+  \end{subfigure}
+
+  \caption{Comparison of generated samples with VLM scores. (a), (b), and (c) show examples with scores of 0, 5, and 9 respectively. Higher scores indicate clearer text legibility and better illusion consistency.}
+  \label{fig:samples}
+\end{figure}
+
+\subsection{Discussion}
+The analysis above indicates that our pipeline successfully provides an automated method for filtering high-quality visual illusions, effectively validating the scaling law in the context of generative search—where increasing the quantity of candidate generations significantly increases the probability of discovering high-quality outliers.
+
+Furthermore, we offer some insights regarding future directions. A primary challenge in many generative tasks lies in designing the appropriate Loss Function. We hypothesize that VLM automated scoring could potentially serve as a direct Loss Function (i.e., a "Loss Prompt"). However, the current limitation is that such VLM feedback is non-differentiable. If this process could be made differentiable, we believe it would unlock significant applications in optimizing complex semantic constraints.
+
+\section{Limitations}
+
+\section{Conclusion}
+
+In this project, we established a unified framework for visual illusion generation based on Score Distillation Sampling (SDS), significantly deepening our understanding of controllable generation within diffusion models. By injecting a novel set of differentiable transformation operators into the SDS optimization pipeline, we transcended the limitations of simple 2D rotations. Our work successfully leveraged the nuances of human perception—specifically the interplay between frequency, luminance, and chrominance—to realize ? distinct categories of illusions:
+
+While achieving these results, we also identified a fundamental limitation of Stable Diffusion in illusion generation: its reliance on a Latent Diffusion Architecture. Since the latent code represents a compressed encoding of image "patches" rather than individual pixels, performing rigid transformations (like rotation) on the latent map disrupts the spatial structure required by the decoder. This lack of rotation equivariance in the latent space often leads to high-frequency artifacts and "ghosting" in multi-view illusions. Future work could address this by adopting pixel-space diffusion models (e.g., DeepFloyd IF) or integrating Visual Language Models (VLMs) for automated illusion evaluation.
+
+To facilitate reproducibility and interaction, we developed a project homepage and a Google Colab environment, allowing users to reproduce all generated illusions. Detailed documentation is provided in the Appendix.
+
+\section{Citations, figures, tables, references}
+\label{others}
+
+
+These instructions apply to everyone.
+
+
+\subsection{Citations within the text}
+
+
+The \verb+natbib+ package will be loaded for you by default.  Citations may be
+author/year or numeric, as long as you maintain internal consistency.  As to the
+format of the references themselves, any style is acceptable as long as it is
+used consistently.
+
+
+The documentation for \verb+natbib+ may be found at
+\begin{center}
+  \url{http://mirrors.ctan.org/macros/latex/contrib/natbib/natnotes.pdf}
+\end{center}
+Of note is the command \verb+\citet+, which produces citations appropriate for
+use in inline text.  For example,
+\begin{verbatim}
+   \citet{hasselmo} investigated\dots
+\end{verbatim}
+produces
+\begin{quote}
+  Hasselmo, et al.\ (1995) investigated\dots
+\end{quote}
+
+
+If you wish to load the \verb+natbib+ package with options, you may add the
+following before loading the \verb+neurips_2024+ package:
+\begin{verbatim}
+   \PassOptionsToPackage{options}{natbib}
+\end{verbatim}
+
+
+If \verb+natbib+ clashes with another package you load, you can add the optional
+argument \verb+nonatbib+ when loading the style file:
+\begin{verbatim}
+   \usepackage[nonatbib]{neurips_2024}
+\end{verbatim}
+
+
+As submission is double blind, refer to your own published work in the third
+person. That is, use ``In the previous work of Jones et al.\ [4],'' not ``In our
+previous work [4].'' If you cite your other papers that are not widely available
+(e.g., a journal paper under review), use anonymous author names in the
+citation, e.g., an author of the form ``A.\ Anonymous'' and include a copy of the anonymized paper in the supplementary material.
+
+
+\subsection{Footnotes}
+
+
+Footnotes should be used sparingly.  If you do require a footnote, indicate
+footnotes with a number\footnote{Sample of the first footnote.} in the
+text. Place the footnotes at the bottom of the page on which they appear.
+Precede the footnote with a horizontal rule of 2~inches (12~picas).
+
+
+Note that footnotes are properly typeset \emph{after} punctuation
+marks.\footnote{As in this example.}
+
+
+\subsection{Figures}
+
+
+\begin{figure}
+  \centering
+  \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
+  \caption{Sample figure caption.}
+\end{figure}
+
+
+All artwork must be neat, clean, and legible. Lines should be dark enough for
+purposes of reproduction. The figure number and caption always appear after the
+figure. Place one line space before the figure caption and one line space after
+the figure. The figure caption should be lower case (except for first word and
+proper nouns); figures are numbered consecutively.
+
+
+You may use color figures.  However, it is best for the figure captions and the
+paper body to be legible if the paper is printed in either black/white or in
+color.
+
+
+\subsection{Tables}
+
+
+All tables must be centered, neat, clean and legible.  The table number and
+title always appear before the table.  See Table~\ref{sample-table}.
+
+
+Place one line space before the table title, one line space after the
+table title, and one line space after the table. The table title must
+be lower case (except for first word and proper nouns); tables are
+numbered consecutively.
+
+
+Note that publication-quality tables \emph{do not contain vertical rules.} We
+strongly suggest the use of the \verb+booktabs+ package, which allows for
+typesetting high-quality, professional tables:
+\begin{center}
+  \url{https://www.ctan.org/pkg/booktabs}
+\end{center}
+This package was used to typeset Table~\ref{sample-table}.
+
+
+\begin{table}
+  \caption{Sample table title}
+  \label{sample-table}
+  \centering
+  \begin{tabular}{lll}
+    \toprule
+    \multicolumn{2}{c}{Part}                   \\
+    \cmidrule(r){1-2}
+    Name     & Description     & Size ($\mu$m) \\
+    \midrule
+    Dendrite & Input terminal  & $\sim$100     \\
+    Axon     & Output terminal & $\sim$10      \\
+    Soma     & Cell body       & up to $10^6$  \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Math}
+Note that display math in bare TeX commands will not create correct line numbers for submission. Please use LaTeX (or AMSTeX) commands for unnumbered display math. (You really shouldn't be using \$\$ anyway; see \url{https://tex.stackexchange.com/questions/503/why-is-preferable-to} and \url{https://tex.stackexchange.com/questions/40492/what-are-the-differences-between-align-equation-and-displaymath} for more information.)
+
+\subsection{Final instructions}
+
+Do not change any aspects of the formatting parameters in the style files.  In
+particular, do not modify the width or length of the rectangle the text should
+fit into, and do not change font sizes (except perhaps in the
+\textbf{References} section; see below). Please note that pages should be
+numbered.
+
+
+\section{Preparing PDF files}
+
+
+Please prepare submission files with paper size ``US Letter,'' and not, for
+example, ``A4.''
+
+
+Fonts were the main cause of problems in the past years. Your PDF file must only
+contain Type 1 or Embedded TrueType fonts. Here are a few instructions to
+achieve this.
+
+
+\begin{itemize}
+
+
+\item You should directly generate PDF files using \verb+pdflatex+.
+
+
+\item You can check which fonts a PDF files uses.  In Acrobat Reader, select the
+  menu Files$>$Document Properties$>$Fonts and select Show All Fonts. You can
+  also use the program \verb+pdffonts+ which comes with \verb+xpdf+ and is
+  available out-of-the-box on most Linux machines.
+
+
+\item \verb+xfig+ "patterned" shapes are implemented with bitmap fonts.  Use
+  "solid" shapes instead.
+
+
+\item The \verb+\bbold+ package almost always uses bitmap fonts.  You should use
+  the equivalent AMS Fonts:
+\begin{verbatim}
+   \usepackage{amsfonts}
+\end{verbatim}
+followed by, e.g., \verb+\mathbb{R}+, \verb+\mathbb{N}+, or \verb+\mathbb{C}+
+for $\mathbb{R}$, $\mathbb{N}$ or $\mathbb{C}$.  You can also use the following
+workaround for reals, natural and complex:
+\begin{verbatim}
+   \newcommand{\RR}{I\!\!R} %real numbers
+   \newcommand{\Nat}{I\!\!N} %natural numbers
+   \newcommand{\CC}{I\!\!\!\!C} %complex numbers
+\end{verbatim}
+Note that \verb+amsfonts+ is automatically loaded by the \verb+amssymb+ package.
+
+
+\end{itemize}
+
+
+If your file contains type 3 fonts or non embedded TrueType fonts, we will ask
+you to fix it.
+
+
+\subsection{Margins in \LaTeX{}}
+
+
+Most of the margin problems come from figures positioned by hand using
+\verb+\special+ or other commands. We suggest using the command
+\verb+\includegraphics+ from the \verb+graphicx+ package. Always specify the
+figure width as a multiple of the line width as in the example below:
+\begin{verbatim}
+   \usepackage[pdftex]{graphicx} ...
+   \includegraphics[width=0.8\linewidth]{myfile.pdf}
+\end{verbatim}
+See Section 4.4 in the graphics bundle documentation
+(\url{http://mirrors.ctan.org/macros/latex/required/graphics/grfguide.pdf})
+
+
+A number of width problems arise when \LaTeX{} cannot properly hyphenate a
+line. Please give LaTeX hyphenation hints using the \verb+\-+ command when
+necessary.
+
+\begin{ack}
+Use unnumbered first level headings for the acknowledgments. All acknowledgments
+go at the end of the paper before the list of references. Moreover, you are required to declare
+funding (financial activities supporting the submitted work) and competing interests (related financial activities outside the submitted work).
+More information about this disclosure can be found at: \url{https://neurips.cc/Conferences/2024/PaperInformation/FundingDisclosure}.
+
+
+Do {\bf not} include this section in the anonymized submission, only in the final paper. You can use the \texttt{ack} environment provided in the style file to automatically hide this section in the anonymized submission.
+\end{ack}
+
+\section*{References}
+
+
+References follow the acknowledgments in the camera-ready paper. Use unnumbered first-level heading for
+the references. Any choice of citation style is acceptable as long as you are
+consistent. It is permissible to reduce the font size to \verb+small+ (9 point)
+when listing the references.
+Note that the Reference section does not count towards the page limit.
+\medskip
+
+
+{
+\small
+
+
+[1] Alexander, J.A.\ \& Mozer, M.C.\ (1995) Template-based algorithms for
+connectionist rule extraction. In G.\ Tesauro, D.S.\ Touretzky and T.K.\ Leen
+(eds.), {\it Advances in Neural Information Processing Systems 7},
+pp.\ 609--616. Cambridge, MA: MIT Press.
+
+
+[2] Bower, J.M.\ \& Beeman, D.\ (1995) {\it The Book of GENESIS: Exploring
+  Realistic Neural Models with the GEneral NEural SImulation System.}  New York:
+TELOS/Springer--Verlag.
+
+
+[3] Hasselmo, M.E., Schnell, E.\ \& Barkai, E.\ (1995) Dynamics of learning and
+recall at excitatory recurrent synapses and cholinergic modulation in rat
+hippocampal region CA3. {\it Journal of Neuroscience} {\bf 15}(7):5249-5262.
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\section{Appendix / supplemental material}
+
+
+Optionally include supplemental material (complete proofs, additional experiments and plots) in appendix.
+All such materials \textbf{SHOULD be included in the main submission.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section*{NeurIPS Paper Checklist}
+
+%%% BEGIN INSTRUCTIONS %%%
+The checklist is designed to encourage best practices for responsible machine learning research, addressing issues of reproducibility, transparency, research ethics, and societal impact. Do not remove the checklist: {\bf The papers not including the checklist will be desk rejected.} The checklist should follow the references and follow the (optional) supplemental material.  The checklist does NOT count towards the page
+limit. 
+
+Please read the checklist guidelines carefully for information on how to answer these questions. For each question in the checklist:
+\begin{itemize}
+    \item You should answer \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item \answerNA{} means either that the question is Not Applicable for that particular paper or the relevant information is Not Available.
+    \item Please provide a short (1–2 sentence) justification right after your answer (even for NA). 
+   % \item {\bf The papers not including the checklist will be desk rejected.}
+\end{itemize}
+
+{\bf The checklist answers are an integral part of your paper submission.} They are visible to the reviewers, area chairs, senior area chairs, and ethics reviewers. You will be asked to also include it (after eventual revisions) with the final version of your paper, and its final version will be published with the paper.
+
+The reviewers of your paper will be asked to use the checklist as one of the factors in their evaluation. While "\answerYes{}" is generally preferable to "\answerNo{}", it is perfectly acceptable to answer "\answerNo{}" provided a proper justification is given (e.g., "error bars are not reported because it would be too computationally expensive" or "we were unable to find the license for the dataset we used"). In general, answering "\answerNo{}" or "\answerNA{}" is not grounds for rejection. While the questions are phrased in a binary way, we acknowledge that the true answer is often more nuanced, so please just use your best judgment and write a justification to elaborate. All supporting evidence can appear either in the main paper or the supplemental material, provided in appendix. If you answer \answerYes{} to a question, in the justification please point to the section(s) where related material for the question can be found.
+
+IMPORTANT, please:
+\begin{itemize}
+    \item {\bf Delete this instruction block, but keep the section heading ``NeurIPS paper checklist"},
+    \item  {\bf Keep the checklist subsection headings, questions/answers and guidelines below.}
+    \item {\bf Do not modify the questions and only use the provided macros for your answers}.
+\end{itemize} 
+ 
+
+%%% END INSTRUCTIONS %%%
+
+
+\begin{enumerate}
+
+\item {\bf Claims}
+    \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the abstract and introduction do not include the claims made in the paper.
+        \item The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A No or NA answer to this question will not be perceived well by the reviewers. 
+        \item The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings. 
+        \item It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. 
+    \end{itemize}
+
+\item {\bf Limitations}
+    \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
+        \item The authors are encouraged to create a separate "Limitations" section in their paper.
+        \item The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be.
+        \item The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated.
+        \item The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon.
+        \item The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size.
+        \item If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness.
+        \item While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren't acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an important role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations.
+    \end{itemize}
+
+\item {\bf Theory Assumptions and Proofs}
+    \item[] Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include theoretical results. 
+        \item All the theorems, formulas, and proofs in the paper should be numbered and cross-referenced.
+        \item All assumptions should be clearly stated or referenced in the statement of any theorems.
+        \item The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition. 
+        \item Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material.
+        \item Theorems and Lemmas that the proof relies upon should be properly referenced. 
+    \end{itemize}
+
+    \item {\bf Experimental Result Reproducibility}
+    \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item If the paper includes experiments, a No answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not.
+        \item If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. 
+        \item Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed.
+        \item While NeurIPS does not require releasing code, the conference does require all submissions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example
+        \begin{enumerate}
+            \item If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm.
+            \item If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully.
+            \item If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset).
+            \item We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results.
+        \end{enumerate}
+    \end{itemize}
+
+
+\item {\bf Open access to data and code}
+    \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that paper does not include experiments requiring code.
+        \item Please see the NeurIPS code and data submission guidelines (\url{https://nips.cc/public/guides/CodeSubmissionPolicy}) for more details.
+        \item While we encourage the release of code and data, we understand that this might not be possible, so “No” is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark).
+        \item The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines (\url{https://nips.cc/public/guides/CodeSubmissionPolicy}) for more details.
+        \item The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc.
+        \item The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why.
+        \item At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable).
+        \item Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted.
+    \end{itemize}
+
+
+\item {\bf Experimental Setting/Details}
+    \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer, etc.) necessary to understand the results?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them.
+        \item The full details can be provided either with the code, in appendix, or as supplemental material.
+    \end{itemize}
+
+\item {\bf Experiment Statistical Significance}
+    \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item The authors should answer "Yes" if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper.
+        \item The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions).
+        \item The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.)
+        \item The assumptions made should be given (e.g., Normally distributed errors).
+        \item It should be clear whether the error bar is the standard deviation or the standard error of the mean.
+        \item It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a 96\% CI, if the hypothesis of Normality of errors is not verified.
+        \item For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g. negative error rates).
+        \item If error bars are reported in tables or plots, The authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text.
+    \end{itemize}
+
+\item {\bf Experiments Compute Resources}
+    \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not include experiments.
+        \item The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage.
+        \item The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute. 
+        \item The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn't make it into the paper). 
+    \end{itemize}
+    
+\item {\bf Code Of Ethics}
+    \item[] Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics \url{https://neurips.cc/public/EthicsGuidelines}?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the authors have not reviewed the NeurIPS Code of Ethics.
+        \item If the authors answer No, they should explain the special circumstances that require a deviation from the Code of Ethics.
+        \item The authors should make sure to preserve anonymity (e.g., if there is a special consideration due to laws or regulations in their jurisdiction).
+    \end{itemize}
+
+
+\item {\bf Broader Impacts}
+    \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that there is no societal impact of the work performed.
+        \item If the authors answer NA or No, they should explain why their work has no societal impact or why the paper does not address societal impact.
+        \item Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations.
+        \item The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster.
+        \item The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology.
+        \item If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML).
+    \end{itemize}
+    
+\item {\bf Safeguards}
+    \item[] Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pretrained language models, image generators, or scraped datasets)?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper poses no such risks.
+        \item Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters. 
+        \item Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images.
+        \item We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort.
+    \end{itemize}
+
+\item {\bf Licenses for existing assets}
+    \item[] Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not use existing assets.
+        \item The authors should cite the original paper that produced the code package or dataset.
+        \item The authors should state which version of the asset is used and, if possible, include a URL.
+        \item The name of the license (e.g., CC-BY 4.0) should be included for each asset.
+        \item For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided.
+        \item If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, \url{paperswithcode.com/datasets} has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset.
+        \item For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided.
+        \item If this information is not available online, the authors are encouraged to reach out to the asset's creators.
+    \end{itemize}
+
+\item {\bf New Assets}
+    \item[] Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not release new assets.
+        \item Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc. 
+        \item The paper should discuss whether and how consent was obtained from people whose asset is used.
+        \item At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file.
+    \end{itemize}
+
+\item {\bf Crowdsourcing and Research with Human Subjects}
+    \item[] Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? 
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.
+        \item Including this information in the supplemental material is fine, but if the main contribution of the paper involves human subjects, then as much detail as possible should be included in the main paper. 
+        \item According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. 
+    \end{itemize}
+
+\item {\bf Institutional Review Board (IRB) Approvals or Equivalent for Research with Human Subjects}
+    \item[] Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained?
+    \item[] Answer: \answerTODO{} % Replace by \answerYes{}, \answerNo{}, or \answerNA{}.
+    \item[] Justification: \justificationTODO{}
+    \item[] Guidelines:
+    \begin{itemize}
+        \item The answer NA means that the paper does not involve crowdsourcing nor research with human subjects.
+        \item Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper. 
+        \item We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution. 
+        \item For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review.
+    \end{itemize}
+
+\end{enumerate}
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
