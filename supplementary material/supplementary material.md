@@ -12,21 +12,6 @@
 
 ```
 Creating-Visual-Cognitive-Illusion/
-├── badcases/                          # 失败测试案例和调试示例
-│   ├── fold_target.jpg
-│   ├── fold.ipynb
-│   ├── words.ipynb
-│   ├── your_name_clear.ipynb
-│   └── your_name_target.jpg
-├── Cross-Domain Luminance Decoupling/ # 跨域亮度解耦错觉
-│   └── color_hybrid.ipynb
-├── Differentiable Cylindrical Anamorphosis/ # 可微柱面变形错觉
-│   ├── glass_monster.ipynb
-│   ├── glass_your_name.ipynb
-│   ├── monster_target.jpg
-│   └── your_name_target.jpg
-├── Distance-Dependent Spectral Hybridization/ # 距离相关的频谱混合错觉
-│   └── multiscale_hybrid.ipynb
 ├── Experiments/                       # 主要的实验流水线，具有自动化评估
 │   ├── blur_illusion/                 # 运动模糊隐写实验
 │   │   ├── auto_closed_loop.py
@@ -47,31 +32,47 @@ Creating-Visual-Cognitive-Illusion/
 │       ├── scripts/                   # 流水线执行脚本
 │       ├── setup.py
 │       └── src/                       # 源代码包
-├── Image-Driven Hard Constraint Optimization/ # 图像驱动的硬约束优化
-│   ├── QRCode.ipynb
-│   └── target.png
-├── Intra-Channel Frequency Splitting/ # 通道内频域分离
-│   └── color_channel_hybrid.ipynb
-├── Motion Integration Steganography/ # 运动积分隐写
-│   ├── blur_panda.ipynb
-│   ├── blur_rose.ipynb
-│   ├── panda_target.jpg
-│   └── rose_target.jpg
-├── Multi-Angle Moire Cryptography/    # 多角度莫尔密码学
-│   ├── love_target.png
-│   ├── rotation_love.ipynb
-│   ├── rotation_triple.ipynb
-│   ├── triple_target1.jpg
-│   ├── triple_target2.jpg
-│   └── triple_target3.jpg
-├── notebooks_from_original_author/    # 原作者的基线实现
-│   ├── flippy_illusions_for_colab.ipynb
-│   ├── hidden_characters_for_colab.ipynb
-│   ├── parker_puzzle_colab.ipynb
-│   ├── rotation_overlays_for_colab.ipynb
-│   └── twisting_squares_colab.ipynb
-├── Orthogonal Voxel Projection Synthesis/ # 正交体素投影合成
-│   └── cube.ipynb
+├── Notebooks/                         # 各种错觉类型的notebook实现
+│   ├── badcases/                      # 失败测试案例和调试示例
+│   │   ├── fold_target.jpg
+│   │   ├── fold.ipynb
+│   │   ├── words.ipynb
+│   │   ├── your_name_clear.ipynb
+│   │   └── your_name_target.jpg
+│   ├── Cross-Domain Luminance Decoupling/ # 跨域亮度解耦错觉
+│   │   └── color_hybrid.ipynb
+│   ├── Differentiable Cylindrical Anamorphosis/ # 可微柱面变形错觉
+│   │   ├── glass_monster.ipynb
+│   │   ├── glass_your_name.ipynb
+│   │   ├── monster_target.jpg
+│   │   └── your_name_target.jpg
+│   ├── Distance-Dependent Spectral Hybridization/ # 距离相关的频谱混合错觉
+│   │   └── multiscale_hybrid.ipynb
+│   ├── Image-Driven Hard Constraint Optimization/ # 图像驱动的硬约束优化
+│   │   ├── QRCode.ipynb
+│   │   └── target.png
+│   ├── Intra-Channel Frequency Splitting/ # 通道内频域分离
+│   │   └── color_channel_hybrid.ipynb
+│   ├── Motion Integration Steganography/ # 运动积分隐写
+│   │   ├── blur_panda.ipynb
+│   │   ├── blur_rose.ipynb
+│   │   ├── panda_target.jpg
+│   │   └── rose_target.jpg
+│   ├── Multi-Angle Moire Cryptography/ # 多角度莫尔密码学
+│   │   ├── love_target.png
+│   │   ├── rotation_love.ipynb
+│   │   ├── rotation_triple.ipynb
+│   │   ├── triple_target1.jpg
+│   │   ├── triple_target2.jpg
+│   │   └── triple_target3.jpg
+│   ├── notebooks_from_original_author/ # 原作者的基线实现
+│   │   ├── flippy_illusions_for_colab.ipynb
+│   │   ├── hidden_characters_for_colab.ipynb
+│   │   ├── parker_puzzle_colab.ipynb
+│   │   ├── rotation_overlays_for_colab.ipynb
+│   │   └── twisting_squares_colab.ipynb
+│   └── Orthogonal Voxel Projection Synthesis/ # 正交体素投影合成
+│       └── cube.ipynb
 ├── report/                            # LaTeX报告和编译文件
 │   ├── report.aux
 │   ├── report.fdb_latexmk
@@ -120,9 +121,9 @@ Creating-Visual-Cognitive-Illusion/
 
 两个流水线都包含完整的环境配置、依赖安装和逐步复现过程文档。
 
-#### 2. 单个错觉Notebook
+#### 2. Notebooks文件夹中的单个错觉Notebook
 
-对于包含`.ipynb`文件的所有其他文件夹，复现过程非常简单：
+对于`Notebooks/`文件夹下包含`.ipynb`文件的所有子文件夹，复现过程非常简单：
 
 **基本步骤**：
 1. 将`.ipynb`文件上传到Google Colab
