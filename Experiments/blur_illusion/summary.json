@@ -1,0 +1,14 @@
+[
+    {
+        "target": "banana",
+        "success": false
+    },
+    {
+        "target": "banana",
+        "success": false
+    },
+    {
+        "target": "umbrella",
+        "success": false
+    }
+]

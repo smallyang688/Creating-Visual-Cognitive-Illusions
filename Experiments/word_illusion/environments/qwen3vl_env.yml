@@ -1,0 +1,24 @@
+name: qwen3vl
+channels:
+  - pytorch
+  - nvidia
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cuda-toolkit
+  - pip:
+    - transformers>=4.45.0
+    - git+https://github.com/huggingface/transformers
+    - torch
+    - accelerate
+    - pillow
+    - numpy
+    - huggingface-hub
+    - bitsandbytes
+    - sentencepiece
+    - protobuf

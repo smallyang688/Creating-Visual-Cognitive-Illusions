@@ -21,3 +21,16 @@ datasets/RefMatte_RW_100.zip
 images/quad_overlays
 images
 notes/seamless_examples
+
+# LaTeX temporary files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.pdf
+pdflatex*.fls

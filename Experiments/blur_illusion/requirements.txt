@@ -1,0 +1,17 @@
+einops==0.4.1
+icecream==2.1.2
+imageio==2.21.3
+matplotlib==3.5.3
+opencv-python==4.6.0.66
+pandas==1.4.3
+rich
+tensorboardX==2.5
+tqdm==4.64.0
+py3nvml
+tensorboard
+scipy
+transformers
+diffusers
+rp
+easydict
+oldest-supported-numpy

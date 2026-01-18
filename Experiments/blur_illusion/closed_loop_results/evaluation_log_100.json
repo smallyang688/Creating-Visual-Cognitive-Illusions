@@ -1,0 +1,1302 @@
+[
+    {
+        "id": 0,
+        "target": "teapot",
+        "score": 7,
+        "prediction": "teapot",
+        "is_match": true,
+        "time_cost": 379.0,
+        "paths": {
+            "static": "closed_loop_results/exp_000_teapot_static.png",
+            "shaken": "closed_loop_results/exp_000_teapot_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"teapot\",\n  \"score\": 7,\n  \"reason\": \"The red shape and surrounding white elements strongly resemble a teapot, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 1,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 377.84,
+        "paths": {
+            "static": "closed_loop_results/exp_001_car_static.png",
+            "shaken": "closed_loop_results/exp_001_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image contains a blurred and abstract representation of a car, with visible shapes resembling its body and windows. While not perfectly clear, the form is recognizable as a car.\"\n}\n```"
+    },
+    {
+        "id": 2,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 378.92,
+        "paths": {
+            "static": "closed_loop_results/exp_002_apple_static.png",
+            "shaken": "closed_loop_results/exp_002_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its shape, color gradient (red and green), and stem, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 3,
+        "target": "umbrella",
+        "score": 7,
+        "prediction": "umbrella",
+        "is_match": true,
+        "time_cost": 379.72,
+        "paths": {
+            "static": "closed_loop_results/exp_003_umbrella_static.png",
+            "shaken": "closed_loop_results/exp_003_umbrella_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"umbrella\",\n  \"score\": 7,\n  \"reason\": \"The image shows a colorful, radial pattern with a central dark line resembling the handle of an umbrella. The vibrant colors and shape suggest it is an umbrella, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 4,
+        "target": "moon",
+        "score": 8,
+        "prediction": "moon",
+        "is_match": true,
+        "time_cost": 379.53,
+        "paths": {
+            "static": "closed_loop_results/exp_004_moon_static.png",
+            "shaken": "closed_loop_results/exp_004_moon_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"moon\",\n  \"score\": 8,\n  \"reason\": \"The image clearly depicts a spherical object with a gradient of colors resembling the moon, though it is slightly blurred.\"\n}\n```"
+    },
+    {
+        "id": 5,
+        "target": "tree",
+        "score": 7,
+        "prediction": "tree",
+        "is_match": true,
+        "time_cost": 378.08,
+        "paths": {
+            "static": "closed_loop_results/exp_005_tree_static.png",
+            "shaken": "closed_loop_results/exp_005_tree_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"tree\",\n  \"score\": 7,\n  \"reason\": \"The image shows a shape with a trunk and a rounded canopy, resembling a tree. The colors and form suggest it is intended to be a tree, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 6,
+        "target": "chair",
+        "score": 7,
+        "prediction": "chair",
+        "is_match": true,
+        "time_cost": 379.18,
+        "paths": {
+            "static": "closed_loop_results/exp_006_chair_static.png",
+            "shaken": "closed_loop_results/exp_006_chair_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"chair\",\n  \"score\": 7,\n  \"reason\": \"The image shows a colorful object with the distinct shape of a chair, including a backrest and legs, though it is somewhat blurry.\"\n}\n```"
+    },
+    {
+        "id": 7,
+        "target": "moon",
+        "score": 7,
+        "prediction": "moon",
+        "is_match": true,
+        "time_cost": 376.67,
+        "paths": {
+            "static": "closed_loop_results/exp_007_moon_static.png",
+            "shaken": "closed_loop_results/exp_007_moon_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"moon\",\n  \"score\": 7,\n  \"reason\": \"The central bright circular shape resembles the moon, though the surrounding blur and streaks make it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 8,
+        "target": "moon",
+        "score": 7,
+        "prediction": "moon",
+        "is_match": true,
+        "time_cost": 377.72,
+        "paths": {
+            "static": "closed_loop_results/exp_008_moon_static.png",
+            "shaken": "closed_loop_results/exp_008_moon_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"moon\",\n  \"score\": 7,\n  \"reason\": \"The object in the center of the image resembles a moon due to its round shape and light color, though it is somewhat obscured by blurriness.\"\n}\n```"
+    },
+    {
+        "id": 9,
+        "target": "sun",
+        "score": 9,
+        "prediction": "sun",
+        "is_match": true,
+        "time_cost": 380.5,
+        "paths": {
+            "static": "closed_loop_results/exp_009_sun_static.png",
+            "shaken": "closed_loop_results/exp_009_sun_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"sun\",\n  \"score\": 9,\n  \"reason\": \"The bright, glowing center with radiating light beams strongly resembles the sun, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 10,
+        "target": "chair",
+        "score": 7,
+        "prediction": "chair",
+        "is_match": true,
+        "time_cost": 378.89,
+        "paths": {
+            "static": "closed_loop_results/exp_010_chair_static.png",
+            "shaken": "closed_loop_results/exp_010_chair_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"chair\",\n  \"score\": 7,\n  \"reason\": \"The object is identifiable as a chair due to its distinct shape, including a backrest and seat, despite the blurriness. The bright colors (pink and yellow) help in distinguishing it from the background.\"\n}\n```"
+    },
+    {
+        "id": 11,
+        "target": "sun",
+        "score": 9,
+        "prediction": "sun",
+        "is_match": true,
+        "time_cost": 376.91,
+        "paths": {
+            "static": "closed_loop_results/exp_011_sun_static.png",
+            "shaken": "closed_loop_results/exp_011_sun_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"sun\",\n  \"score\": 9,\n  \"reason\": \"The central yellow and red circular shape with radiating lines strongly resembles the sun, despite some blurriness.\"\n}\n```"
+    },
+    {
+        "id": 12,
+        "target": "bottle",
+        "score": 7,
+        "prediction": "bottle",
+        "is_match": true,
+        "time_cost": 379.64,
+        "paths": {
+            "static": "closed_loop_results/exp_012_bottle_static.png",
+            "shaken": "closed_loop_results/exp_012_bottle_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"bottle\",\n  \"score\": 7,\n  \"reason\": \"The image shows three colorful, elongated shapes resembling bottles, though they are blurry and lack sharp detail.\"\n}\n```"
+    },
+    {
+        "id": 13,
+        "target": "moon",
+        "score": 8,
+        "prediction": "moon",
+        "is_match": true,
+        "time_cost": 378.51,
+        "paths": {
+            "static": "closed_loop_results/exp_013_moon_static.png",
+            "shaken": "closed_loop_results/exp_013_moon_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"moon\",\n  \"score\": 8,\n  \"reason\": \"The image clearly shows a circular shape with a gradient of colors resembling the moon, though it is slightly blurred.\"\n}\n```"
+    },
+    {
+        "id": 14,
+        "target": "cup",
+        "score": 7,
+        "prediction": "cup",
+        "is_match": true,
+        "time_cost": 378.4,
+        "paths": {
+            "static": "closed_loop_results/exp_014_cup_static.png",
+            "shaken": "closed_loop_results/exp_014_cup_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cup\",\n  \"score\": 7,\n  \"reason\": \"The image contains blurred shapes and colors that suggest the presence of a cup, but the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 15,
+        "target": "bottle",
+        "score": 7,
+        "prediction": "bottle",
+        "is_match": true,
+        "time_cost": 377.96,
+        "paths": {
+            "static": "closed_loop_results/exp_015_bottle_static.png",
+            "shaken": "closed_loop_results/exp_015_bottle_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"bottle\",\n  \"score\": 7,\n  \"reason\": \"The object on the right side of the image resembles a bottle due to its shape and vertical orientation, though it is partially obscured and blurry.\"\n}\n```"
+    },
+    {
+        "id": 16,
+        "target": "tree",
+        "score": 7,
+        "prediction": "tree",
+        "is_match": true,
+        "time_cost": 382.25,
+        "paths": {
+            "static": "closed_loop_results/exp_016_tree_static.png",
+            "shaken": "closed_loop_results/exp_016_tree_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"tree\",\n  \"score\": 7,\n  \"reason\": \"The image contains a shape with a trunk and a colorful, rounded canopy that resembles a tree. While the details are obscured by blurriness, the overall form is recognizable as a tree.\"\n}\n```"
+    },
+    {
+        "id": 17,
+        "target": "moon",
+        "score": 7,
+        "prediction": "moon",
+        "is_match": true,
+        "time_cost": 382.56,
+        "paths": {
+            "static": "closed_loop_results/exp_017_moon_static.png",
+            "shaken": "closed_loop_results/exp_017_moon_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"moon\",\n  \"score\": 7,\n  \"reason\": \"The central blue circular shape resembles the moon, though it is surrounded by colorful, blurred elements that obscure its clarity.\"\n}\n```"
+    },
+    {
+        "id": 18,
+        "target": "cat",
+        "score": 7,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 381.13,
+        "paths": {
+            "static": "closed_loop_results/exp_018_cat_static.png",
+            "shaken": "closed_loop_results/exp_018_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurry figure with distinct feline features such as pointed ears, facial structure, and fur texture, making it recognizable as a cat despite the lack of clarity.\"\n}\n```"
+    },
+    {
+        "id": 19,
+        "target": "dog",
+        "score": 7,
+        "prediction": "dog",
+        "is_match": true,
+        "time_cost": 381.59,
+        "paths": {
+            "static": "closed_loop_results/exp_019_dog_static.png",
+            "shaken": "closed_loop_results/exp_019_dog_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"dog\",\n  \"score\": 7,\n  \"reason\": \"The image shows a colorful, abstract pattern that resembles the shape and features of a dog's face, particularly with visible elements like an eye and snout.\"\n}\n```"
+    },
+    {
+        "id": 20,
+        "target": "chair",
+        "score": 7,
+        "prediction": "chair",
+        "is_match": true,
+        "time_cost": 383.52,
+        "paths": {
+            "static": "closed_loop_results/exp_020_chair_static.png",
+            "shaken": "closed_loop_results/exp_020_chair_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"chair\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurry object with the distinct shape of a chair, including a backrest and seat, though details are obscured by the blur.\"\n}\n```"
+    },
+    {
+        "id": 21,
+        "target": "cat",
+        "score": 8,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 381.84,
+        "paths": {
+            "static": "closed_loop_results/exp_021_cat_static.png",
+            "shaken": "closed_loop_results/exp_021_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 8,\n  \"reason\": \"The image shows a blurry but recognizable cat with distinct features like green eyes, a pink nose, and orange-and-white fur.\"\n}\n```"
+    },
+    {
+        "id": 22,
+        "target": "star",
+        "score": 9,
+        "prediction": "star",
+        "is_match": true,
+        "time_cost": 381.39,
+        "paths": {
+            "static": "closed_loop_results/exp_022_star_static.png",
+            "shaken": "closed_loop_results/exp_022_star_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"star\",\n  \"score\": 9,\n  \"reason\": \"The star is clearly visible in the center of the image, with bright white light radiating from it, making it stand out despite the colorful and blurred background.\"\n}\n```"
+    },
+    {
+        "id": 23,
+        "target": "heart",
+        "score": 8,
+        "prediction": "heart",
+        "is_match": true,
+        "time_cost": 375.33,
+        "paths": {
+            "static": "closed_loop_results/exp_023_heart_static.png",
+            "shaken": "closed_loop_results/exp_023_heart_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"heart\",\n  \"score\": 8,\n  \"reason\": \"The heart shape is clearly visible with vibrant colors, though the overall image is blurry.\"\n}\n```"
+    },
+    {
+        "id": 24,
+        "target": "teapot",
+        "score": 7,
+        "prediction": "teapot",
+        "is_match": true,
+        "time_cost": 377.24,
+        "paths": {
+            "static": "closed_loop_results/exp_024_teapot_static.png",
+            "shaken": "closed_loop_results/exp_024_teapot_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"teapot\",\n  \"score\": 7,\n  \"reason\": \"The object is somewhat recognizable as a teapot due to its general shape and handle, but the blurriness makes it difficult to discern finer details.\"\n}\n```"
+    },
+    {
+        "id": 25,
+        "target": "sun",
+        "score": 7,
+        "prediction": "sun",
+        "is_match": true,
+        "time_cost": 377.68,
+        "paths": {
+            "static": "closed_loop_results/exp_025_sun_static.png",
+            "shaken": "closed_loop_results/exp_025_sun_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"sun\",\n  \"score\": 7,\n  \"reason\": \"The central bright area and radiating colors resemble the sun, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 26,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 377.39,
+        "paths": {
+            "static": "closed_loop_results/exp_026_apple_static.png",
+            "shaken": "closed_loop_results/exp_026_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The image shows two round, red objects with a hint of green, which are clearly identifiable as apples. However, the blurriness reduces the clarity.\"\n}\n```"
+    },
+    {
+        "id": 27,
+        "target": "sun",
+        "score": 9,
+        "prediction": "sun",
+        "is_match": true,
+        "time_cost": 377.98,
+        "paths": {
+            "static": "closed_loop_results/exp_027_sun_static.png",
+            "shaken": "closed_loop_results/exp_027_sun_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"sun\",\n  \"score\": 9,\n  \"reason\": \"The bright, central glow with radiating lines strongly resembles the sun, despite the blur.\"\n}\n```"
+    },
+    {
+        "id": 28,
+        "target": "bottle",
+        "score": 7,
+        "prediction": "bottle",
+        "is_match": true,
+        "time_cost": 376.54,
+        "paths": {
+            "static": "closed_loop_results/exp_028_bottle_static.png",
+            "shaken": "closed_loop_results/exp_028_bottle_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"bottle\",\n  \"score\": 7,\n  \"reason\": \"The object is somewhat recognizable as a bottle due to its elongated shape and white color, but the heavy blurring and vibrant background make it difficult to discern clearly.\"\n}\n```"
+    },
+    {
+        "id": 29,
+        "target": "lamp",
+        "score": 0,
+        "prediction": "lamp",
+        "is_match": true,
+        "time_cost": 380.42,
+        "paths": {
+            "static": "closed_loop_results/exp_029_lamp_static.png",
+            "shaken": "closed_loop_results/exp_029_lamp_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"lamp\",\n  \"score\": 0,\n  \"reason\": \"The image is entirely abstract and blurry, with no discernible shapes or forms that resemble a lamp.\"\n}\n```"
+    },
+    {
+        "id": 30,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 379.91,
+        "paths": {
+            "static": "closed_loop_results/exp_030_apple_static.png",
+            "shaken": "closed_loop_results/exp_030_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The image shows red and green hues with circular shapes that strongly resemble apples, though the blurriness makes it less clear.\"\n}\n```"
+    },
+    {
+        "id": 31,
+        "target": "cat",
+        "score": 7,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 378.47,
+        "paths": {
+            "static": "closed_loop_results/exp_031_cat_static.png",
+            "shaken": "closed_loop_results/exp_031_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurry figure with orange and white coloring, characteristic of a cat. While the details are obscured, the overall shape and coloration strongly suggest the presence of a cat.\"\n}\n```"
+    },
+    {
+        "id": 32,
+        "target": "dog",
+        "score": 7,
+        "prediction": "dog",
+        "is_match": true,
+        "time_cost": 376.28,
+        "paths": {
+            "static": "closed_loop_results/exp_032_dog_static.png",
+            "shaken": "closed_loop_results/exp_032_dog_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"dog\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurry figure with the distinct shape and coloration of a dog, including its body, legs, and head. While not perfectly clear, the form is recognizable as a dog.\"\n}\n```"
+    },
+    {
+        "id": 33,
+        "target": "moon",
+        "score": 7,
+        "prediction": "moon",
+        "is_match": true,
+        "time_cost": 378.16,
+        "paths": {
+            "static": "closed_loop_results/exp_033_moon_static.png",
+            "shaken": "closed_loop_results/exp_033_moon_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"moon\",\n  \"score\": 7,\n  \"reason\": \"The green circular shape resembles the moon, but the blurriness and color distortion reduce its clarity.\"\n}\n```"
+    },
+    {
+        "id": 34,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 378.1,
+        "paths": {
+            "static": "closed_loop_results/exp_034_car_static.png",
+            "shaken": "closed_loop_results/exp_034_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurred object with the distinct shape and colors of a car, including blue and yellow sections, though it is not sharply defined.\"\n}\n```"
+    },
+    {
+        "id": 35,
+        "target": "book",
+        "score": 0,
+        "prediction": "colorful shapes",
+        "is_match": false,
+        "time_cost": 378.34,
+        "paths": {
+            "static": "closed_loop_results/exp_035_book_static.png",
+            "shaken": "closed_loop_results/exp_035_book_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"colorful shapes\",\n  \"score\": 0,\n  \"reason\": \"The image is completely blurred with no discernible object, making it impossible to identify a 'book'.\"\n}\n```"
+    },
+    {
+        "id": 36,
+        "target": "banana",
+        "score": 7,
+        "prediction": "banana",
+        "is_match": true,
+        "time_cost": 381.58,
+        "paths": {
+            "static": "closed_loop_results/exp_036_banana_static.png",
+            "shaken": "closed_loop_results/exp_036_banana_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"banana\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as a banana due to its distinct yellow color and elongated shape, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 37,
+        "target": "key",
+        "score": 7,
+        "prediction": "key",
+        "is_match": true,
+        "time_cost": 380.23,
+        "paths": {
+            "static": "closed_loop_results/exp_037_key_static.png",
+            "shaken": "closed_loop_results/exp_037_key_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"key\",\n  \"score\": 7,\n  \"reason\": \"The image contains multiple colorful shapes that resemble keys, but the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 38,
+        "target": "dog",
+        "score": 7,
+        "prediction": "dog",
+        "is_match": true,
+        "time_cost": 380.66,
+        "paths": {
+            "static": "closed_loop_results/exp_038_dog_static.png",
+            "shaken": "closed_loop_results/exp_038_dog_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"dog\",\n  \"score\": 7,\n  \"reason\": \"The image contains a blurry, abstract shape that resembles the outline of a dog's head and ears. While not perfectly clear, the form is discernible enough to suggest the presence of a dog.\"\n}\n```"
+    },
+    {
+        "id": 39,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 377.4,
+        "paths": {
+            "static": "closed_loop_results/exp_039_apple_static.png",
+            "shaken": "closed_loop_results/exp_039_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its red color and shape, though the blurriness reduces the clarity.\"\n}\n```"
+    },
+    {
+        "id": 40,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 380.03,
+        "paths": {
+            "static": "closed_loop_results/exp_040_car_static.png",
+            "shaken": "closed_loop_results/exp_040_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image shows a brightly colored object with the distinct shape of a car, including wheels and a body, though it is heavily blurred.\"\n}\n```"
+    },
+    {
+        "id": 41,
+        "target": "book",
+        "score": 7,
+        "prediction": "book",
+        "is_match": true,
+        "time_cost": 378.36,
+        "paths": {
+            "static": "closed_loop_results/exp_041_book_static.png",
+            "shaken": "closed_loop_results/exp_041_book_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"book\",\n  \"score\": 7,\n  \"reason\": \"The image shows a rectangular object with distinct color sections resembling the spine and cover of a book, though it is somewhat blurry.\"\n}\n```"
+    },
+    {
+        "id": 42,
+        "target": "cat",
+        "score": 7,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 379.0,
+        "paths": {
+            "static": "closed_loop_results/exp_042_cat_static.png",
+            "shaken": "closed_loop_results/exp_042_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurry figure with distinct features resembling a cat, including a head shape and possible fur texture, though the blurriness makes it less clear.\"\n}\n```"
+    },
+    {
+        "id": 43,
+        "target": "tree",
+        "score": 7,
+        "prediction": "tree",
+        "is_match": true,
+        "time_cost": 378.43,
+        "paths": {
+            "static": "closed_loop_results/exp_043_tree_static.png",
+            "shaken": "closed_loop_results/exp_043_tree_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"tree\",\n  \"score\": 7,\n  \"reason\": \"The image contains a dark, branching structure resembling a tree trunk and limbs, with colorful, abstract shapes suggesting leaves or foliage. While the details are obscured by blur, the overall shape is recognizable as a tree.\"\n}\n```"
+    },
+    {
+        "id": 44,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 377.17,
+        "paths": {
+            "static": "closed_loop_results/exp_044_apple_static.png",
+            "shaken": "closed_loop_results/exp_044_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its shape, color gradient (red and green), and stem, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 45,
+        "target": "key",
+        "score": 7,
+        "prediction": "key",
+        "is_match": true,
+        "time_cost": 374.58,
+        "paths": {
+            "static": "closed_loop_results/exp_045_key_static.png",
+            "shaken": "closed_loop_results/exp_045_key_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"key\",\n  \"score\": 7,\n  \"reason\": \"The object appears to be a key due to its elongated shape and the presence of a metallic sheen, though the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 46,
+        "target": "flower",
+        "score": 7,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 378.16,
+        "paths": {
+            "static": "closed_loop_results/exp_046_flower_static.png",
+            "shaken": "closed_loop_results/exp_046_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 7,\n  \"reason\": \"The image contains vibrant colors and shapes resembling a flower, particularly the purple and yellow areas, but the motion blur makes it difficult to discern clearly.\"\n}\n```"
+    },
+    {
+        "id": 47,
+        "target": "flower",
+        "score": 8,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 380.39,
+        "paths": {
+            "static": "closed_loop_results/exp_047_flower_static.png",
+            "shaken": "closed_loop_results/exp_047_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 8,\n  \"reason\": \"The central area of the image clearly resembles a flower with a bright yellow center and radiating petals in blue, pink, and purple. The surrounding blur enhances the focus on this shape.\"\n}\n```"
+    },
+    {
+        "id": 48,
+        "target": "lamp",
+        "score": 7,
+        "prediction": "lamp",
+        "is_match": true,
+        "time_cost": 382.39,
+        "paths": {
+            "static": "closed_loop_results/exp_048_lamp_static.png",
+            "shaken": "closed_loop_results/exp_048_lamp_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"lamp\",\n  \"score\": 7,\n  \"reason\": \"The object appears to be a lamp due to its shape and the visible light source at the top, though the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 49,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 379.87,
+        "paths": {
+            "static": "closed_loop_results/exp_049_apple_static.png",
+            "shaken": "closed_loop_results/exp_049_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its characteristic shape, color gradient (red and green), and central core. However, the blurriness reduces the clarity compared to a sharp image.\"\n}\n```"
+    },
+    {
+        "id": 50,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 383.27,
+        "paths": {
+            "static": "closed_loop_results/exp_050_car_static.png",
+            "shaken": "closed_loop_results/exp_050_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The yellow color and general shape suggest a car, but the significant blurring makes it difficult to confirm details.\"\n}\n```"
+    },
+    {
+        "id": 51,
+        "target": "cat",
+        "score": 7,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 384.29,
+        "paths": {
+            "static": "closed_loop_results/exp_051_cat_static.png",
+            "shaken": "closed_loop_results/exp_051_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 7,\n  \"reason\": \"The image contains a blurry figure that resembles a cat, with visible features like ears and a body shape consistent with a feline. However, the high level of blur makes it difficult to confirm definitively.\"\n}\n```"
+    },
+    {
+        "id": 52,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 379.06,
+        "paths": {
+            "static": "closed_loop_results/exp_052_car_static.png",
+            "shaken": "closed_loop_results/exp_052_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image shows a brightly colored object with a shape resembling a car, but it is heavily blurred, making it difficult to discern fine details.\"\n}\n```"
+    },
+    {
+        "id": 53,
+        "target": "chair",
+        "score": 7,
+        "prediction": "chair",
+        "is_match": true,
+        "time_cost": 380.4,
+        "paths": {
+            "static": "closed_loop_results/exp_053_chair_static.png",
+            "shaken": "closed_loop_results/exp_053_chair_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"chair\",\n  \"score\": 7,\n  \"reason\": \"The object appears to be a chair due to its distinct shape with a backrest and seat, though the blurriness makes it difficult to confirm details.\"\n}\n```"
+    },
+    {
+        "id": 54,
+        "target": "heart",
+        "score": 8,
+        "prediction": "heart",
+        "is_match": true,
+        "time_cost": 381.27,
+        "paths": {
+            "static": "closed_loop_results/exp_054_heart_static.png",
+            "shaken": "closed_loop_results/exp_054_heart_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"heart\",\n  \"score\": 8,\n  \"reason\": \"The heart shape is discernible despite the blurriness, with distinct color gradients forming its outline.\"\n}\n```"
+    },
+    {
+        "id": 55,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 380.73,
+        "paths": {
+            "static": "closed_loop_results/exp_055_car_static.png",
+            "shaken": "closed_loop_results/exp_055_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurred object with bright yellow and colorful accents, which strongly suggests the shape and color of a car. However, the heavy blurring makes it difficult to confirm details.\"\n}\n```"
+    },
+    {
+        "id": 56,
+        "target": "flower",
+        "score": 7,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 374.27,
+        "paths": {
+            "static": "closed_loop_results/exp_056_flower_static.png",
+            "shaken": "closed_loop_results/exp_056_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 7,\n  \"reason\": \"The image contains multiple colorful shapes resembling flowers, but the blurriness makes it difficult to confirm if they are indeed flowers or abstract patterns.\"\n}\n```"
+    },
+    {
+        "id": 57,
+        "target": "heart",
+        "score": 7,
+        "prediction": "heart",
+        "is_match": true,
+        "time_cost": 374.26,
+        "paths": {
+            "static": "closed_loop_results/exp_057_heart_static.png",
+            "shaken": "closed_loop_results/exp_057_heart_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"heart\",\n  \"score\": 7,\n  \"reason\": \"The heart shape is discernible despite the blurriness, with distinct color sections (red, blue, green, yellow) forming its outline.\"\n}\n```"
+    },
+    {
+        "id": 58,
+        "target": "cat",
+        "score": 8,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 372.43,
+        "paths": {
+            "static": "closed_loop_results/exp_058_cat_static.png",
+            "shaken": "closed_loop_results/exp_058_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 8,\n  \"reason\": \"The image clearly shows a cat with distinct features like green eyes, a white chest, and striped fur, despite some blurriness.\"\n}\n```"
+    },
+    {
+        "id": 59,
+        "target": "teapot",
+        "score": 7,
+        "prediction": "teapot",
+        "is_match": true,
+        "time_cost": 371.54,
+        "paths": {
+            "static": "closed_loop_results/exp_059_teapot_static.png",
+            "shaken": "closed_loop_results/exp_059_teapot_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"teapot\",\n  \"score\": 7,\n  \"reason\": \"The image shows a blurry object with the distinct shape of a teapot, including a handle and spout, though details are obscured by the blur.\"\n}\n```"
+    },
+    {
+        "id": 60,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 369.17,
+        "paths": {
+            "static": "closed_loop_results/exp_060_apple_static.png",
+            "shaken": "closed_loop_results/exp_060_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its red color and shape, though the blurriness reduces the clarity.\"\n}\n```"
+    },
+    {
+        "id": 61,
+        "target": "key",
+        "score": 7,
+        "prediction": "key",
+        "is_match": true,
+        "time_cost": 368.42,
+        "paths": {
+            "static": "closed_loop_results/exp_061_key_static.png",
+            "shaken": "closed_loop_results/exp_061_key_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"key\",\n  \"score\": 7,\n  \"reason\": \"The image shows three colorful, elongated shapes resembling keys with visible handles and shafts, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 62,
+        "target": "teapot",
+        "score": 7,
+        "prediction": "teapot",
+        "is_match": true,
+        "time_cost": 368.49,
+        "paths": {
+            "static": "closed_loop_results/exp_062_teapot_static.png",
+            "shaken": "closed_loop_results/exp_062_teapot_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"teapot\",\n  \"score\": 7,\n  \"reason\": \"The object appears to be a teapot due to its distinct shape, including a spout and handle, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 63,
+        "target": "heart",
+        "score": 8,
+        "prediction": "heart",
+        "is_match": true,
+        "time_cost": 367.59,
+        "paths": {
+            "static": "closed_loop_results/exp_063_heart_static.png",
+            "shaken": "closed_loop_results/exp_063_heart_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"heart\",\n  \"score\": 8,\n  \"reason\": \"The heart shape is clearly visible in the center of the image, with vibrant colors and distinct outlines despite some surrounding blur.\"\n}\n```"
+    },
+    {
+        "id": 64,
+        "target": "shoe",
+        "score": 7,
+        "prediction": "shoe",
+        "is_match": true,
+        "time_cost": 369.09,
+        "paths": {
+            "static": "closed_loop_results/exp_064_shoe_static.png",
+            "shaken": "closed_loop_results/exp_064_shoe_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"shoe\",\n  \"score\": 7,\n  \"reason\": \"The object 'shoe' is partially visible with a yellow edge and blue interior, but the blurriness makes it difficult to confirm its shape definitively.\"\n}\n```"
+    },
+    {
+        "id": 65,
+        "target": "heart",
+        "score": 8,
+        "prediction": "heart",
+        "is_match": true,
+        "time_cost": 366.89,
+        "paths": {
+            "static": "closed_loop_results/exp_065_heart_static.png",
+            "shaken": "closed_loop_results/exp_065_heart_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"heart\",\n  \"score\": 8,\n  \"reason\": \"The image clearly depicts a heart shape composed of colorful, block-like sections. Although the overall image is blurry, the distinct outline and internal color pattern make the heart easily recognizable.\"\n}\n```"
+    },
+    {
+        "id": 66,
+        "target": "cat",
+        "score": 8,
+        "prediction": "cat",
+        "is_match": true,
+        "time_cost": 375.33,
+        "paths": {
+            "static": "closed_loop_results/exp_066_cat_static.png",
+            "shaken": "closed_loop_results/exp_066_cat_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cat\",\n  \"score\": 8,\n  \"reason\": \"The image clearly shows a cat with distinct features like blue eyes, a collar, and fur texture, despite some blurriness.\"\n}\n```"
+    },
+    {
+        "id": 67,
+        "target": "lamp",
+        "score": 8,
+        "prediction": "lamp",
+        "is_match": true,
+        "time_cost": 378.49,
+        "paths": {
+            "static": "closed_loop_results/exp_067_lamp_static.png",
+            "shaken": "closed_loop_results/exp_067_lamp_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"lamp\",\n  \"score\": 8,\n  \"reason\": \"The shapes and colors of the objects strongly resemble lamps, with distinct bases and rounded tops, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 68,
+        "target": "bottle",
+        "score": 7,
+        "prediction": "bottle",
+        "is_match": true,
+        "time_cost": 381.46,
+        "paths": {
+            "static": "closed_loop_results/exp_068_bottle_static.png",
+            "shaken": "closed_loop_results/exp_068_bottle_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"bottle\",\n  \"score\": 7,\n  \"reason\": \"The object has a cylindrical shape and a colorful label, which are characteristic of a bottle. However, the motion blur makes it difficult to see clearly.\"\n}\n```"
+    },
+    {
+        "id": 69,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 380.09,
+        "paths": {
+            "static": "closed_loop_results/exp_069_car_static.png",
+            "shaken": "closed_loop_results/exp_069_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image contains a colorful, abstract shape that resembles the outline of a car, with visible features like windows and wheels, though it is heavily blurred.\"\n}\n```"
+    },
+    {
+        "id": 70,
+        "target": "tree",
+        "score": 8,
+        "prediction": "tree",
+        "is_match": true,
+        "time_cost": 381.16,
+        "paths": {
+            "static": "closed_loop_results/exp_070_tree_static.png",
+            "shaken": "closed_loop_results/exp_070_tree_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"tree\",\n  \"score\": 8,\n  \"reason\": \"The image clearly depicts a tree with distinct color sections (green, orange, and pink), despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 71,
+        "target": "teapot",
+        "score": 7,
+        "prediction": "teapot",
+        "is_match": true,
+        "time_cost": 377.8,
+        "paths": {
+            "static": "closed_loop_results/exp_071_teapot_static.png",
+            "shaken": "closed_loop_results/exp_071_teapot_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"teapot\",\n  \"score\": 7,\n  \"reason\": \"The red shape with a handle and spout is recognizable as a teapot, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 72,
+        "target": "flower",
+        "score": 8,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 377.79,
+        "paths": {
+            "static": "closed_loop_results/exp_072_flower_static.png",
+            "shaken": "closed_loop_results/exp_072_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 8,\n  \"reason\": \"A bright pink flower is visible in the top-left corner, though it appears slightly blurred and out of focus.\"\n}\n```"
+    },
+    {
+        "id": 73,
+        "target": "flower",
+        "score": 7,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 380.8,
+        "paths": {
+            "static": "closed_loop_results/exp_073_flower_static.png",
+            "shaken": "closed_loop_results/exp_073_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 7,\n  \"reason\": \"The image contains a blurred, colorful pattern that strongly resembles a flower with a central core and radiating petals. While the details are obscured, the overall shape and color distribution suggest the presence of a flower.\"\n}\n```"
+    },
+    {
+        "id": 74,
+        "target": "key",
+        "score": 7,
+        "prediction": "key",
+        "is_match": true,
+        "time_cost": 379.24,
+        "paths": {
+            "static": "closed_loop_results/exp_074_key_static.png",
+            "shaken": "closed_loop_results/exp_074_key_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"key\",\n  \"score\": 7,\n  \"reason\": \"The object resembles a key due to its shape and handle-like structure, but the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 75,
+        "target": "lamp",
+        "score": 8,
+        "prediction": "lamp",
+        "is_match": true,
+        "time_cost": 379.58,
+        "paths": {
+            "static": "closed_loop_results/exp_075_lamp_static.png",
+            "shaken": "closed_loop_results/exp_075_lamp_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"lamp\",\n  \"score\": 8,\n  \"reason\": \"The object is clearly identifiable as a lamp due to the visible bulb and fixture, despite some blurriness.\"\n}\n```"
+    },
+    {
+        "id": 76,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 381.06,
+        "paths": {
+            "static": "closed_loop_results/exp_076_car_static.png",
+            "shaken": "closed_loop_results/exp_076_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The image contains a blurred object with distinct red and white colors, suggesting the presence of a car. However, the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 77,
+        "target": "umbrella",
+        "score": 8,
+        "prediction": "umbrella",
+        "is_match": true,
+        "time_cost": 379.45,
+        "paths": {
+            "static": "closed_loop_results/exp_077_umbrella_static.png",
+            "shaken": "closed_loop_results/exp_077_umbrella_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"umbrella\",\n  \"score\": 8,\n  \"reason\": \"The vibrant, multicolored pattern and radial symmetry strongly suggest an umbrella, though the blurriness makes it less distinct.\"\n}\n```"
+    },
+    {
+        "id": 78,
+        "target": "flower",
+        "score": 8,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 379.1,
+        "paths": {
+            "static": "closed_loop_results/exp_078_flower_static.png",
+            "shaken": "closed_loop_results/exp_078_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 8,\n  \"reason\": \"The central part of the image clearly resembles a flower with a yellow-orange center and pink petals, despite the surrounding blur.\"\n}\n```"
+    },
+    {
+        "id": 79,
+        "target": "flower",
+        "score": 7,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 378.93,
+        "paths": {
+            "static": "closed_loop_results/exp_079_flower_static.png",
+            "shaken": "closed_loop_results/exp_079_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 7,\n  \"reason\": \"The image contains colorful shapes resembling flowers, but the blurriness and motion effects make it difficult to identify them clearly.\"\n}\n```"
+    },
+    {
+        "id": 80,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 378.41,
+        "paths": {
+            "static": "closed_loop_results/exp_080_apple_static.png",
+            "shaken": "closed_loop_results/exp_080_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The image contains objects with red and green coloring that resemble apples, but the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 81,
+        "target": "chair",
+        "score": 7,
+        "prediction": "chair",
+        "is_match": true,
+        "time_cost": 380.32,
+        "paths": {
+            "static": "closed_loop_results/exp_081_chair_static.png",
+            "shaken": "closed_loop_results/exp_081_chair_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"chair\",\n  \"score\": 7,\n  \"reason\": \"The image shows a colorful, abstract shape with armrests and a backrest, strongly resembling a chair despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 82,
+        "target": "lamp",
+        "score": 7,
+        "prediction": "lamp",
+        "is_match": true,
+        "time_cost": 378.71,
+        "paths": {
+            "static": "closed_loop_results/exp_082_lamp_static.png",
+            "shaken": "closed_loop_results/exp_082_lamp_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"lamp\",\n  \"score\": 7,\n  \"reason\": \"The red lampshade and its stand are discernible despite the blurriness, with the shape and color making it recognizable.\"\n}\n```"
+    },
+    {
+        "id": 83,
+        "target": "car",
+        "score": 7,
+        "prediction": "car",
+        "is_match": true,
+        "time_cost": 379.75,
+        "paths": {
+            "static": "closed_loop_results/exp_083_car_static.png",
+            "shaken": "closed_loop_results/exp_083_car_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"car\",\n  \"score\": 7,\n  \"reason\": \"The yellow color and general shape of the object suggest a car, but the motion blur makes it difficult to discern specific details.\"\n}\n```"
+    },
+    {
+        "id": 84,
+        "target": "flower",
+        "score": 8,
+        "prediction": "flower",
+        "is_match": true,
+        "time_cost": 380.05,
+        "paths": {
+            "static": "closed_loop_results/exp_084_flower_static.png",
+            "shaken": "closed_loop_results/exp_084_flower_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"flower\",\n  \"score\": 8,\n  \"reason\": \"The image clearly shows a flower with pink petals and a yellow center, though it is slightly blurred.\"\n}\n```"
+    },
+    {
+        "id": 85,
+        "target": "sun",
+        "score": 9,
+        "prediction": "sun",
+        "is_match": true,
+        "time_cost": 378.18,
+        "paths": {
+            "static": "closed_loop_results/exp_085_sun_static.png",
+            "shaken": "closed_loop_results/exp_085_sun_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"sun\",\n  \"score\": 9,\n  \"reason\": \"The bright central glow and radiating lines strongly resemble the sun, despite some blurriness.\"\n}\n```"
+    },
+    {
+        "id": 86,
+        "target": "dog",
+        "score": 7,
+        "prediction": "dog",
+        "is_match": true,
+        "time_cost": 382.07,
+        "paths": {
+            "static": "closed_loop_results/exp_086_dog_static.png",
+            "shaken": "closed_loop_results/exp_086_dog_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"dog\",\n  \"score\": 7,\n  \"reason\": \"The image contains a blurry figure with features resembling a dog, such as a snout and ears, though the details are obscured by motion blur.\"\n}\n```"
+    },
+    {
+        "id": 87,
+        "target": "star",
+        "score": 7,
+        "prediction": "star",
+        "is_match": true,
+        "time_cost": 380.51,
+        "paths": {
+            "static": "closed_loop_results/exp_087_star_static.png",
+            "shaken": "closed_loop_results/exp_087_star_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"star\",\n  \"score\": 7,\n  \"reason\": \"The image contains a bright, multi-pointed shape resembling a star, with green and yellow colors. However, the blurriness and noise in the image reduce its clarity.\"\n}\n```"
+    },
+    {
+        "id": 88,
+        "target": "umbrella",
+        "score": 0,
+        "prediction": "colorful pattern",
+        "is_match": false,
+        "time_cost": 381.22,
+        "paths": {
+            "static": "closed_loop_results/exp_088_umbrella_static.png",
+            "shaken": "closed_loop_results/exp_088_umbrella_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"colorful pattern\",\n  \"score\": 0,\n  \"reason\": \"The image is a highly blurred and abstract composition of colors with no discernible object, including an umbrella.\"\n}\n```"
+    },
+    {
+        "id": 89,
+        "target": "key",
+        "score": 7,
+        "prediction": "cross",
+        "is_match": false,
+        "time_cost": 380.0,
+        "paths": {
+            "static": "closed_loop_results/exp_089_key_static.png",
+            "shaken": "closed_loop_results/exp_089_key_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cross\",\n  \"score\": 7,\n  \"reason\": \"The image clearly shows a colorful cross with red, yellow, green, and blue sections. The object 'key' is not visible.\"\n}\n```"
+    },
+    {
+        "id": 90,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 381.07,
+        "paths": {
+            "static": "closed_loop_results/exp_090_apple_static.png",
+            "shaken": "closed_loop_results/exp_090_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its red color, shape, and visible stem, despite the blurriness.\"\n}\n```"
+    },
+    {
+        "id": 91,
+        "target": "teapot",
+        "score": 7,
+        "prediction": "teapot",
+        "is_match": true,
+        "time_cost": 378.34,
+        "paths": {
+            "static": "closed_loop_results/exp_091_teapot_static.png",
+            "shaken": "closed_loop_results/exp_091_teapot_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"teapot\",\n  \"score\": 7,\n  \"reason\": \"The object resembles a teapot due to its shape and spout, but it is partially obscured by motion blur and vibrant colors.\"\n}\n```"
+    },
+    {
+        "id": 92,
+        "target": "bottle",
+        "score": 7,
+        "prediction": "bottle",
+        "is_match": true,
+        "time_cost": 380.03,
+        "paths": {
+            "static": "closed_loop_results/exp_092_bottle_static.png",
+            "shaken": "closed_loop_results/exp_092_bottle_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"bottle\",\n  \"score\": 7,\n  \"reason\": \"The green shape in the center resembles a bottle, but the image is heavily blurred and abstract, making it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 93,
+        "target": "book",
+        "score": 0,
+        "prediction": "book",
+        "is_match": true,
+        "time_cost": 379.81,
+        "paths": {
+            "static": "closed_loop_results/exp_093_book_static.png",
+            "shaken": "closed_loop_results/exp_093_book_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"book\",\n  \"score\": 0,\n  \"reason\": \"The image is entirely blurred with no discernible shapes or objects, making it impossible to identify a 'book'.\"\n}\n```"
+    },
+    {
+        "id": 94,
+        "target": "heart",
+        "score": 8,
+        "prediction": "heart",
+        "is_match": true,
+        "time_cost": 376.75,
+        "paths": {
+            "static": "closed_loop_results/exp_094_heart_static.png",
+            "shaken": "closed_loop_results/exp_094_heart_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"heart\",\n  \"score\": 8,\n  \"reason\": \"The heart shape is clearly visible despite the blurriness, with distinct red and yellow colors standing out against the patterned background.\"\n}\n```"
+    },
+    {
+        "id": 95,
+        "target": "lamp",
+        "score": 7,
+        "prediction": "lamp",
+        "is_match": true,
+        "time_cost": 379.59,
+        "paths": {
+            "static": "closed_loop_results/exp_095_lamp_static.png",
+            "shaken": "closed_loop_results/exp_095_lamp_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"lamp\",\n  \"score\": 7,\n  \"reason\": \"The object resembles a lamp with a yellow bulb and black base, though the image is blurry.\"\n}\n```"
+    },
+    {
+        "id": 96,
+        "target": "bottle",
+        "score": 7,
+        "prediction": "bottle",
+        "is_match": true,
+        "time_cost": 379.63,
+        "paths": {
+            "static": "closed_loop_results/exp_096_bottle_static.png",
+            "shaken": "closed_loop_results/exp_096_bottle_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"bottle\",\n  \"score\": 7,\n  \"reason\": \"The object resembles a bottle due to its elongated shape and color gradient, but the blurriness makes it difficult to confirm with certainty.\"\n}\n```"
+    },
+    {
+        "id": 97,
+        "target": "apple",
+        "score": 7,
+        "prediction": "apple",
+        "is_match": true,
+        "time_cost": 379.89,
+        "paths": {
+            "static": "closed_loop_results/exp_097_apple_static.png",
+            "shaken": "closed_loop_results/exp_097_apple_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"apple\",\n  \"score\": 7,\n  \"reason\": \"The object is clearly identifiable as an apple due to its red color and shape, though the blurriness reduces the clarity.\"\n}\n```"
+    },
+    {
+        "id": 98,
+        "target": "cup",
+        "score": 7,
+        "prediction": "cup",
+        "is_match": true,
+        "time_cost": 381.55,
+        "paths": {
+            "static": "closed_loop_results/exp_098_cup_static.png",
+            "shaken": "closed_loop_results/exp_098_cup_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"cup\",\n  \"score\": 7,\n  \"reason\": \"The image contains circular shapes with a reflective surface and a handle-like structure, which are characteristic features of a cup. The blurriness makes it difficult to confirm definitively, but the object is recognizable.\"\n}\n```"
+    },
+    {
+        "id": 99,
+        "target": "key",
+        "score": 7,
+        "prediction": "key",
+        "is_match": true,
+        "time_cost": 379.11,
+        "paths": {
+            "static": "closed_loop_results/exp_099_key_static.png",
+            "shaken": "closed_loop_results/exp_099_key_shaken.png"
+        },
+        "raw_response": "```json\n{\n  \"detected_object\": \"key\",\n  \"score\": 7,\n  \"reason\": \"The object 'key' is somewhat discernible due to its distinct shape and color contrast, but the blurriness significantly reduces clarity.\"\n}\n```"
+    }
+]
