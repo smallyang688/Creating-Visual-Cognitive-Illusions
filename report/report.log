@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.26)  18 JAN 2026 20:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.26)  18 JAN 2026 22:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/latex/report.tex
-(c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/latex/report.tex
+**c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/report/report.tex
+(c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/report/report.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-10-09>
 (e:/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -158,7 +158,7 @@ Type X to quit or <RETURN> to proceed,
 or enter new name. (Default extension: sty)
 
 Enter file name: 
-c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/latex/report.tex:24: Emergency stop.
+c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/report/report.tex:24: Emergency stop.
 <read *> 
          
 l.24 ^^M
@@ -168,10 +168,10 @@ l.24 ^^M
  
 Here is how much of TeX's memory you used:
  3125 strings out of 467747
- 50758 string characters out of 5431120
+ 50761 string characters out of 5431120
  455133 words of memory out of 5000000
  31851 multiletter control sequences out of 15000+600000
  627721 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,0n,77p,407b,76s stack positions out of 10000i,1000n,20000p,200000b,200000s
-c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/latex/report.tex:24:  ==> Fatal error occurred, no output PDF file produced!
+ 67i,0n,77p,408b,76s stack positions out of 10000i,1000n,20000p,200000b,200000s
+c:/Users/10061/Desktop/curriculum/cv/final_project/repository/Creating-Visual-Cognitive-Illusion/report/report.tex:24:  ==> Fatal error occurred, no output PDF file produced!
