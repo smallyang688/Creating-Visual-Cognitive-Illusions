@@ -73,12 +73,14 @@ Creating-Visual-Cognitive-Illusion/
 │   │   └── twisting_squares_colab.ipynb
 │   └── Orthogonal Voxel Projection Synthesis/ # 正交体素投影合成
 │       └── cube.ipynb
-├── report/                            # LaTeX报告和编译文件
-│   ├── report.aux
-│   ├── report.fdb_latexmk
-│   ├── report.fls
-│   ├── report.log
-│   └── report.tex
+├── report/                            # 项目报告文件
+│   ├── report.pdf                     # 编译完成的PDF报告
+│   └── report_source/                 # LaTeX源码和资源文件
+│       ├── figures/                   # 报告中使用的所有图片和图表
+│       ├── neurips_2024.tex           # 主要的LaTeX文档
+│       ├── neurips_2024.sty           # neurips会议模板样式文件
+│       ├── neurips_2024.pdf           # neurips会议模板PDF
+│       └── references.bib             # 参考文献数据库
 ├── requirements.txt                   # Python依赖项
 ├── readme.md                          # 项目概述
 └── supplementary material/            # 本补充材料

@@ -10,6 +10,8 @@
 \usepackage{graphicx}   % <--- 必须改为 graphicx
 \usepackage{amsmath}
 \usepackage{subcaption} % <--- 确保这一行也在，否则子图无法运行
+\usepackage{float}
+\raggedbottom           % 关键！防止 LaTeX 强行拉伸垂直间距导致的巨大空白
 \usepackage{algorithm}
 \usepackage{algorithmic}
 
@@ -29,7 +31,7 @@
 
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
+\usepackage[colorlinks,linkcolor=green,urlcolor=blue]{hyperref}       % hyperlinks
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
@@ -37,7 +39,6 @@
 \usepackage{microtype}      % microtypography
 \usepackage{xcolor}         % colors
 \usepackage{subcaption}
-
 
 \title{Visual Illusion Generation System Based on Diffusion Models}
 
@@ -54,15 +55,12 @@
 \author{%
   Zihan Yang \\
   EECS, Peking University \\
-  \texttt{email} \\
   \And
   Yuming Fang \\
   EECS, Peking University \\
-  \texttt{email} \\
   \And
   Yueran Wang \\
   SMS, Peking University \\
-  \texttt{email} \\
 }
 
 
@@ -74,14 +72,14 @@
 
 \begin{abstract}
   For this Computer Vision final project, we selected the topic of Creating Visual
-  Cognitive Illusions for our experimentation.This paper presents an in-depth study on visual illusion generation using diffusion models. Building upon the reproduction and analysis of the existing Diffusion Illusion model, we identified its implementation flaws and theoretical limitations regarding complex geometric transformations and multi-stable perception. To address these issues, we constructed an Enhanced Illusion Generation Framework. By leveraging the generative prior of Score Distillation Sampling (SDS) and integrating a novel set of differentiable transformation operators into the optimization loop, our framework enables the decoupled optimization of image parameters across frequency domains, color spaces, and geometric perspectives. We successfully extended and implemented [7] distinct categories of visual illusions, including multi-scale hybrids, color-channel separation, cross-modal color-grayscale camouflage, and motion-induced parallax.To enhance reproducibility and interactivity, we developed a dedicated project homepage and an online execution environment. Experimental results demonstrate that our method significantly expands the flexibility and quality of generative illusions, providing new technical avenues for interactive art creation and multi-modal information hiding.
+  Cognitive Illusions for our experimentation.This paper presents an in-depth study on visual illusion generation using diffusion models. Building upon the reproduction and analysis of the existing Diffusion Illusion model, we identified its implementation flaws and theoretical limitations regarding complex geometric transformations and multi-stable perception. To address these issues, we constructed an Enhanced Illusion Generation Framework. By leveraging the generative prior of Score Distillation Sampling (SDS) and integrating a novel set of differentiable transformation operators into the optimization loop, our framework enables the decoupled optimization of image parameters across frequency domains, color spaces, and geometric perspectives. We successfully extended and implemented 8 distinct categories of visual illusions, including multi-scale hybrids, color-channel separation, cross-modal color-grayscale camouflage, and motion-induced parallax.To enhance reproducibility and interactivity, we developed a dedicated project homepage and an online execution environment. Experimental results demonstrate that our method significantly expands the flexibility and quality of generative illusions, providing new technical avenues for interactive art creation and multi-modal information hiding.And our source code is available \href{https://github.com/smallyang688/Creating-Visual-Cognitive-Illusions}{this website}.
   
 \end{abstract}
 
 
 \section{Introduction}
 
-Visual illusions—images designed to deceive the human visual system—encompass various categories, including ambiguous illusions, geometric-optical illusions, and motion illusions. Historically, they have remained a focal point of research in both psychology and computer graphics. In recent years, Diffusion Models have demonstrated exceptional capability in modeling complex distributions. Their scope of application has expanded far beyond mere image synthesis, extending to general robotic action trajectory generation\cite{chi2025diffusion} and Sim-to-Real navigation strategies (e.g., NavDP\cite{cai2025navdp}). However, despite the revolutionary breakthroughs Generative AI has brought to image creation, precise control over the geometric features and semantic attributes required for visual illusions remains a significant challenge.
+Visual illusions—images designed to deceive the human visual system—encompass various categories, including ambiguous illusions, geometric-optical illusions, and motion illusions. Historically, they have remained a focal point of research in both psychology and computer graphics. In recent years, Diffusion Models have demonstrated exceptional capability in modeling complex distributions. Their scope of application has expanded far beyond mere image synthesis, extending to general robotic action trajectory generation\cite{chi2025diffusion} and Sim-to-Real navigation strategies (e.g. NavDP\cite{cai2025navdp}). However, despite the revolutionary breakthroughs Generative AI has brought to image creation, precise control over the geometric features and semantic attributes required for visual illusions remains a significant challenge.
 
 Building upon the "Diffusion Illusion" framework by Ryan\cite{10.1145/3641519.3657500}, we identified theoretical limitations in existing models, specifically their restriction to a narrow range of illusion types and their reliance solely on text-based inputs. To address this, we focus on ambiguous illusions and extend the framework by incorporating an image-guidance mechanism and a suite of differentiable transformation operators. This approach not only enriches the diversity of generatable illusions but also supports user-supplied reference images. Specifically, we have implemented the following effects:
 
@@ -96,7 +94,7 @@ Building upon the "Diffusion Illusion" framework by Ryan\cite{10.1145/3641519.36
     
     \item \textbf{Framework Abstraction and Extension:} We formalized the previous specific implementations into a \textbf{Unified Multi-View Optimization Framework}. Based on this abstraction, we significantly expanded the solution space by introducing eight novel illusion categories, the implementation details of which are comprehensively described in Section \ref{sec:method}.
 
-    \item  \textbf{}
+    \item  Finally, we developed a comprehensive \href{https://smallyang688.github.io/Creating-Visual-Cognitive-Illusions_homepage/}{homepage} with an interactive interface, allowing users to explore our results and generate their own illusions in real-time.
 \end{itemize}
 
 
@@ -116,10 +114,16 @@ To overcome single-view limitations, optimization-based frameworks leverage Scor
 
 
 As our method is a zero-shot optimization approach, we do not require a traditional training dataset. Instead, we utilize:
+\begin{itemize}
+    \item \textbf{Pre-trained Model} Stable Diffusion (based on the work of Diffusion Illusion\cite{10.1145/3641519.3657500}) acts as the source of visual knowledge and DeepFloyd IF.
 
-Pre-trained Model: Stable Diffusion (based on the work of Diffusion Illusion\cite{10.1145/3641519.3657500}) acts as the source of visual knowledge and DeepFloyd IF.
+    \item  \textbf{Input Prompts} We carefully designed a series of prompts with striking contrasts for illusion generation, which yielded favorable results. In addition, we incorporated images generated by nanobanana as prompt inputs and embedded them into the illusions.
 
-Input Prompts: beyond the example prompts provided by the original paper’s authors, we carefully designed a series of prompts with striking contrasts for illusion generation, which yielded favorable results. In addition, we incorporated images generated by nanobanana as prompt inputs and embedded them into the illusions.
+    \item \textbf{Evaluation} For quantitative assessment, we employ the VQA\cite{shahgir2024illusionvqa} and GVIL\cite{zhang2023grounding} datasets. 
+\end{itemize}
+ 
+
+
 
 
 \section{Method}
@@ -164,7 +168,7 @@ The general pseudocode for this framework is presented in Algorithm~\ref{alg:fra
 \end{algorithm}
 
 \subsection{Baseline Implementation}
-We first summarize the three baseline implementations by Burgert\cite{10.1145/3641519.3657500}, which constitute special cases of this framework:
+We first summarize the three baseline implementations (visualized in Figure \ref{fig:baseline_results}) by Burgert\cite{10.1145/3641519.3657500}, which constitute special cases of this framework:
 
 \begin{itemize}
     \item \textbf{Flippy Illusion:} $\theta$ is a single image. The transformation $T$ is a $180^\circ$ rotation. The image conforms to two distinct text descriptions when viewed upright and inverted.
@@ -278,7 +282,7 @@ To evaluate the quality of visual illusions generated by Diffusion Models, one v
 In this assignment, we designed an automated pipeline for the generation and evaluation of visual illusions. The framework of this pipeline consists of two main stages: automated generation using Diffusion Models and intelligent evaluation using VLMs. Under this framework, we evaluated and analyzed two types of illusions:
 \begin{enumerate}
     \item \textbf{Text Flip Illusion (Ambigrams):} An image that reveals one string of text when viewed upright and a different string when rotated by 180 degrees \cite{geng2024visual}.
-    \item \textbf{Hybrid Illusion:} As described in Section \ref{sec:methods}, where perception changes based on frequency or color modality.
+    \item \textbf{Hybrid Illusion:} As described in Section \ref{sec:method}, where perception changes based on frequency or color modality.
 \end{enumerate}
 
 \subsection{Pipeline Architecture and Implementation}
@@ -353,46 +357,250 @@ Table \ref{tab:score_dist} illustrates the score distribution for the (EECS, SMS
   \label{fig:samples}
 \end{figure}
 
-\subsection{Discussion}
+
+% ---------------------------------------------------------
+% 原来的 Limitations 章节已被移除，移至文末附录
+% ---------------------------------------------------------
+
+\section{Conclusion}
+
+In this project, we established a unified framework for visual illusion generation based on Score Distillation Sampling (SDS), significantly deepening our understanding of controllable generation within diffusion models. By injecting a novel set of differentiable transformation operators into the SDS optimization pipeline, we transcended the limitations of simple 2D rotations. Our work successfully leveraged the nuances of human perception—specifically the interplay between frequency, luminance, and chrominance—to realize \textbf{eight} distinct categories of illusions.
+
+
+% ... (前面的 Conclusion 内容) ...
+
+While achieving these results, we also identified that Stable Diffusion is lack of Rotation Equivariance. Future work could address this by adopting pixel-space diffusion models (e.g. DeepFloyd IF) or integrating Visual Language Models (VLMs) for automated illusion evaluation. Detailed documentation and a more comprehensive analysis of the limitations are provided in the Appendix.
+
+To facilitate reproducibility and interaction, we developed a project homepage and a Google Colab environment, allowing users to reproduce all generated illusions. 
+
+% ==========================================
+% 这里加上 \newpage 或 \clearpage 
+% 强制参考文献另起一页
+% ==========================================
+\newpage 
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX START
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\appendix
+
+% 这里的 \raggedbottom 再次确保生效（虽然放在导言区最好，但放这里双重保险）
+\raggedbottom 
+
+\section{More Results}
+
+\subsection{Results from the Original paper}
+
+% 使用 [H] 强制图片紧跟在 Subsection 标题下方
+\begin{figure}[H] 
+    \centering
+    % 这里的 width=\linewidth 确保撑满宽度
+    \includegraphics[width=\linewidth]{figures/three_original.png} 
+    \caption {Three optical illusion categories originally proposed by Burgert et al.: the Flip Illusion, the Rotation Overlay Illusion, and the Hidden Overlay Illusion.}
+    \label{fig:baseline_results}
+\end{figure}
+
+\subsection{More Results from Our Methods}
+
+% --- 第 1 组图片 (Distance-Dependent) ---
+\begin{figure}[htbp] 
+    \centering
+    \begin{subfigure}[b]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/distance1.pdf} 
+        \caption{Distance-Dependent Spectral Hybridization}
+        \label{fig:dist_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/distance2.pdf}
+        \caption{Distance-Dependent Spectral Hybridization}
+        \label{fig:dist_2}
+    \end{subfigure}
+    \caption{\textbf{Distance-Dependent Results.} Examples of hybrid images that change appearance based on viewing distance.}
+    \label{fig:distance_group}
+\end{figure}
+
+% --- 第 2 组图片 (Fold & Motion) ---
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/fold.pdf}
+        \caption{Fold Illusion}
+        \label{fig:fold_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/panda_blur.pdf}
+        \caption{Motion Integration Steganography}
+        \label{fig:motion_1}
+    \end{subfigure}
+    \caption{\textbf{Fold and Motion Illusions.} (a) A preliminary attempt at a \textbf{Fold Illusion}. The image depicts a temple; however, when specific sections of the paper are folded inward, the Peking University logo is revealed. (b) An example of motion integration.}
+    \label{fig:fold_motion_group}
+\end{figure}
+
+% --- 第 3 组图片 (Cylindrical) ---
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}[b]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/glass_good.pdf}
+        \caption{Differentiable Cylindrical Anamorphosis}
+        \label{fig:cyl_1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/your_name_bad.pdf}
+        \caption{Differentiable Cylindrical Anamorphosis}
+        \label{fig:cyl_2}
+    \end{subfigure}
+    \caption{\textbf{Cylindrical Anamorphosis.} Results showing images that resolve into coherent visuals when reflected on a cylindrical mirror.}
+    \label{fig:cylindrical_group}
+\end{figure}
+
+\subsection{Real World Performances}
+
+To validate the physical robustness and practical applicability of our unified framework, we printed the generated illusion patterns onto transparent film and conducted experiments in real-world settings. 
+
+% --- 修改了这里的引用文字，适应拆分后的图片 ---
+As illustrated in the figures below, our method demonstrates promising transferability from the digital domain to the physical world. \textbf{Figure \ref{fig:real_success_1}} and \textbf{Figure \ref{fig:real_success_2}} show successful examples where the optical illusions remain effective under physical observation conditions. However, we also encountered limitations, as shown in the failure case in \textbf{Figure \ref{fig:real_failure}}.
+
+This specific failure case was inspired by the concept of "Generative Anamorphoses" proposed in \emph{LookingGlass} \cite{lookingglass}. As shown in \textbf{Figure \ref{fig:lookingglass_ref}}, their project page demonstrates compelling visual results using Laplacian Pyramid Warping. However, since the official codebase is unavailable, we attempted to reproduce this effect within our optimization-based framework. While we successfully achieved the target illusion in digital simulations, the physical reproduction failed to reconstruct the target image correctly due to alignment precision and unmodeled physical refraction. Bridging this "Sim-to-Real" gap for complex anamorphic illusions remains a key direction for our future work.
+
+% === 图片 1：成功案例 1 ===
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/real_world1.pdf}
+    \caption{\textbf{Physical Validation (Success I).} A successful real-world reproduction printed on transparent film, retaining the illusion effect.}
+    \label{fig:real_success_1}
+\end{figure}
+
+% === 图片 2：成功案例 2 ===
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/real_world2.pdf}
+    \caption{\textbf{Physical Validation (Success II).} Another successful example demonstrating the robustness of our method in physical settings.}
+    \label{fig:real_success_2}
+\end{figure}
+
+% === 图片 3：失败案例 ===
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/real_world3.pdf}
+    \caption{\textbf{Physical Validation (Failure Case).} A physical reproduction of the LookingGlass-inspired illusion which failed to reconstruct the target view.}
+    \label{fig:real_failure}
+\end{figure}
+
+% === 图片 4：Reference ===
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{figures/glass_success.png}
+    \caption{Reference visualization from the \emph{LookingGlass} project page \cite{lookingglass}, which inspired our attempt at generative anamorphoses.}
+    \label{fig:lookingglass_ref}
+\end{figure}
+
+
+
+
+\section{Discussion}
+\label{sec:discussion}
+
 The analysis above indicates that our pipeline successfully provides an automated method for filtering high-quality visual illusions, effectively validating the scaling law in the context of generative search—where increasing the quantity of candidate generations significantly increases the probability of discovering high-quality outliers.
 
 Furthermore, we offer some insights regarding future directions. A primary challenge in many generative tasks lies in designing the appropriate Loss Function. We hypothesize that VLM automated scoring could potentially serve as a direct Loss Function (i.e., a "Loss Prompt"). However, the current limitation is that such VLM feedback is non-differentiable. If this process could be made differentiable, we believe it would unlock significant applications in optimizing complex semantic constraints.
 
-\section{Limitations}
-
 While this study significantly expands the boundaries of diffusion-based visual illusion generation through strategies such as image-driven hard constraints, frequency separation, and cross-domain decoupling, our experiments reveal substantial limitations regarding model architecture, theoretical constraints, and optimization stability.
+
+\section{Limitations}
+\label{sec:limitations}
+
+\subsection{Limited Typography and Algorithmic Alternatives}
+Despite the visual fidelity of Stable Diffusion, its capability to generate precise, legible typography remains a significant bottleneck. For geometric illusions requiring exact character alignment and strict perspective consistency—such as the perspective-based text concealment shown in Figure \ref{fig:code_text_illusion}—generative approaches often yield illegible glyphs or fail to adhere to the rigid geometric constraints required for the illusion to work. 
+
+Consequently, for this specific category, we found that traditional algorithmic generation (deterministic rendering via projection code) significantly outperforms latent diffusion models. As demonstrated in Figure \ref{fig:code_text_illusion}(b), our code-based implementation successfully creates a structure that appears as chaotic noise from a neutral viewpoint but clearly resolves into distinct sentences ("I HATE PKU ICS" and "I LOVE PKU CV") when viewed from specific angles. This level of structural precision is currently difficult to achieve using standard Stable Diffusion pipelines due to the lack of explicit character-aware mechanisms in the latent space.
+
+% 插入两行图片的 Figure 代码
+\begin{figure}[H]
+    \centering
+    % --- 第一行：参考/启发图 ---
+    \begin{subfigure}[b]{\linewidth}
+        \centering
+        % 请替换为您第一排图片的文件名（Inspiration）
+        \includegraphics[width=\linewidth]{figures/IHATEPKUICS0.pdf} 
+        \caption{Inspiration: The reference wire-frame text illusion.}
+        \label{fig:text_ref}
+    \end{subfigure}
+    
+    \vspace{1em} % 行间距
+
+    % --- 第二行：你们生成的代码结果图 ---
+    \begin{subfigure}[b]{\linewidth}
+        \centering
+        % 请替换为您第二排图片的文件名（I HATE/LOVE PKU...）
+        \includegraphics[width=\linewidth]{figures/IHATEPKUICS.pdf}
+        \caption{Our Algorithmic Generation: Visualizing hidden messages from specific viewpoints.}
+        \label{fig:text_ours}
+    \end{subfigure}
+
+    \caption{\textbf{Algorithmic Text Illusion Generation.} (a) The reference concept that inspired our experiment. (b) Our reproduction using a deterministic code-based pipeline instead of Stable Diffusion. The structure appears as unintelligible clutter from a normal viewing angle but resolves into the coherent messages "I HATE PKU ICS" and "I LOVE PKU CV" when observed from two specific varying perspectives. This highlights the superiority of algorithmic approaches over diffusion models for precise typographic illusions.}
+    \label{fig:code_text_illusion}
+\end{figure}
 
 \subsection{Artifacts in Latent Space Transformations}
 Our framework utilizes Stable Diffusion (SD) as the generative backbone, which relies on a Variational Autoencoder (VAE) to compress images into latent space. For tasks involving geometric transformations—such as Orthogonal Voxel Projection or Multi-Angle Moire Cryptography—manipulating the latent grid directly rearranges the spatial configuration of latent patches but fails to rotate the encoded content within the patches themselves. This discrepancy results in "thatching artifacts" (jagged edges at patch boundaries) upon decoding, disrupting the visual continuity of the illusion. Pixel-based architectures, such as DeepFloyd IF, demonstrate superior adaptability to such transformations but entail significantly higher computational costs.
 
 \subsection{Gradient Conflicts in Projective Transformations}
-
-In exploring Cross-Domain Luminance Decoupling (Color-Grayscale Switch), we encountered challenges more severe than those in traditional geometric illusions. Previous works like Visual Anagrams\cite{geng2024visual} rely primarily on orthogonal transformations (e.g.rotation), which preserve invertibility and noise statistics. In contrast, the conversion from RGB to grayscale is a non-invertible projective transformation ($\mathbb{R}^3 \to \mathbb{R}^1$). Our experiments indicate that simple channel splicing leads to semantic incoherence, while gradient-based joint optimization suffers from "structural competition." Since the luminance channel carries the majority of structural information, gradients from the color objective and the grayscale objective often conflict violently. This forces the optimization to sacrifice the naturalness of the color image to satisfy the grayscale constraint, frequently resulting in oversaturated artifacts or unnatural textures.
+In exploring Cross-Domain Luminance Decoupling (Color-Grayscale Switch), we encountered challenges more severe than those in traditional geometric illusions. Previous works like Visual Anagrams\cite{geng2024visual} rely primarily on orthogonal transformations (e.g. rotation), which preserve invertibility and noise statistics. In contrast, the conversion from RGB to grayscale is a non-invertible projective transformation ($\mathbb{R}^3 \to \mathbb{R}^1$). Our experiments indicate that simple channel splicing leads to semantic incoherence, while gradient-based joint optimization suffers from "structural competition." Since the luminance channel carries the majority of structural information, gradients from the color objective and the grayscale objective often conflict violently. This forces the optimization to sacrifice the naturalness of the color image to satisfy the grayscale constraint, frequently resulting in oversaturated artifacts or unnatural textures.
 
 \subsection{Trade-off between Pixel Alignment and Semantic Fidelity}
-
-Generating visual illusions essentially involves identifying the intersection of multiple semantic concepts on the image manifold. This is particularly challenging when introducing Image-Driven Hard Constraint Optimization, where we enforce strict pixel-level alignment with reference targets (e.g.specific logos). Such rigid mathematical constraints often force the generative process to deviate from the natural image distribution. Consequently, the optimization tends to compromise texture realism for geometric precision, yielding images that satisfy structural requirements but exhibit perceptual anomalies—such as high-frequency noise or over-sharpening—resembling adversarial examples.
+Generating visual illusions essentially involves identifying the intersection of multiple semantic concepts on the image manifold. This is particularly challenging when introducing Image-Driven Hard Constraint Optimization, where we enforce strict pixel-level alignment with reference targets (e.g. specific logos). Such rigid mathematical constraints often force the generative process to deviate from the natural image distribution. Consequently, the optimization tends to compromise texture realism for geometric precision, yielding images that satisfy structural requirements but exhibit perceptual anomalies—such as high-frequency noise or over-sharpening—resembling adversarial examples.
 
 \subsection{Over-optimization and Ghosting}
-
 Contrary to the expectation that more iterations yield better results, we observed that image quality does not monotonically improve with iteration count in SDS-based optimization. Empirical evidence from our Distance-Dependent Spectral Hybridization experiments suggests that perceptual quality peaks at approximately 1500–2000 iterations. Extending optimization beyond this point (e.g., to the 5000 iterations used in baseline works) leads to "over-optimization," where the model introduces excessive high-frequency details to maximize classifier scores. This results in oversaturation and "ghosting" (where hidden views bleed into the visible view), indicating a lack of a perception-aware stopping mechanism in current algorithms.
 
 \subsection{Hyperparameter Sensitivity}
-
 By introducing complex transformations in both frequency and spatial domains—such as Intra-Channel Frequency Splitting and Motion Integration Steganography—our method exhibits high sensitivity to hyperparameters. Unlike standard text-to-image generation, illusion synthesis requires finding a Pareto optimal solution among competing loss functions. Critical parameters include spectral cutoff frequencies, loss weights for different views, and the optimization schedule. Experiments show that these parameters often require fine-grained, case-specific tuning to prevent one visual component from dominating the others, hindering fully automated generation.
 
 \subsection{Dataset Bias and Generative Boundaries}
-
 Our study finds that the generative capacity of diffusion models is significantly constrained by training data priors and encoder architecture, manifesting in three key aspects. First, since SD v1.4 was primarily trained on the LAION-5B dataset, the model exhibits significant Western-centric bias. This leads to severe semantic deviations when processing specific cultural symbols or complex non-Western scenarios, as well as inevitable Western stylistic biases in generated images. Second, the model has internalized strong 3D Consistency Priors of the physical world. When attempting to generate "geometric paradoxes" like Penrose triangles\cite{dodik2025meschers}, the model tends to use prior knowledge to "correct" spatial contradictions, forcing them into ordinary objects that conform to perspective laws, causing the geometric illusion to fail. Finally, limited by the CLIP text encoder's semantic rather than character-aware mechanism, the model shows instability in handling Typography. When generating text-based illusions such as Ambigrams, the model often treats text as texture rather than symbol sequences, frequently resulting in missing strokes or gibberish, making precise glyph control difficult to achieve.
 
-\section{Conclusion}
+\subsection{Lack of Photometric and Color-based Illusions}
+While our framework successfully generates structural and multi-view optical illusions, it currently does not account for \textbf{photometric or color-based illusions}. Classical examples, such as the Checker Shadow illusion discussed by Kingdom~\cite{kingdom2020shadows}, rely on the human visual system's mechanisms of color constancy and brightness assimilation. Our current diffusion guidance focuses on spatial arrangement and semantic consistency, rather than manipulating local contrast to induce color perception biases. Recent work such as \textit{Color Illusion Diffusion}~\cite{kulikov2024color} has demonstrated that diffusion models can be adapted to generate such effects via specific attention or brightness guidance. Integrating these perceptual color priors into our pipeline remains a promising direction for future research.
 
-In this project, we established a unified framework for visual illusion generation based on Score Distillation Sampling (SDS), significantly deepening our understanding of controllable generation within diffusion models. By injecting a novel set of differentiable transformation operators into the SDS optimization pipeline, we transcended the limitations of simple 2D rotations. Our work successfully leveraged the nuances of human perception—specifically the interplay between frequency, luminance, and chrominance—to realize ? distinct categories of illusions:
+% --- 修改点：将 [h] 改为 [H] ---
+\begin{figure}[H] 
+    \centering
+    \includegraphics[width=\linewidth]{figures/color.png} 
+    \caption{\textbf{Photometric Illusions via Diffusion.} Examples from \textit{Color Illusion Diffusion}~\cite{kulikov2024color}. Unlike our method which focuses on geometric restructuring, these results demonstrate how diffusion models can be guided to manipulate luminance and color perception (e.g., the cyan and red circles appear different but possess identical pixel values). Incorporating such photometric control is a future direction for our framework.}
+    \label{fig:color_illusion_limitations}
+\end{figure}
 
-While achieving these results, we also identified a fundamental limitation of Stable Diffusion in illusion generation: its reliance on a Latent Diffusion Architecture. Since the latent code represents a compressed encoding of image "patches" rather than individual pixels, performing rigid transformations (like rotation) on the latent map disrupts the spatial structure required by the decoder. This lack of rotation equivariance in the latent space often leads to high-frequency artifacts and "ghosting" in multi-view illusions. Future work could address this by adopting pixel-space diffusion models (e.g. DeepFloyd IF) or integrating Visual Language Models (VLMs) for automated illusion evaluation. Due to space constraints, a more comprehensive analysis of the limitations and technical constraints is also included in the Appendix.
+% 这样后面的 Work Allocation 就会紧接着排在图片下面（只要空间够）
 
-To facilitate reproducibility and interaction, we developed a project homepage and a Google Colab environment, allowing users to reproduce all generated illusions. Detailed documentation is provided in the Appendix.
+\section{Work Allocation}
 
-\bibliographystyle{plain}
-\bibliography{references}
+\begin{itemize}
+    \item \textbf{Literature Review}: Yueran Wang
+    \item \textbf{Codebase Study \& Reproduction}: Yuming Fang
+    \item \textbf{Idea Investigation \& Methodology Research}: Zihan Yang
+    \item \textbf{Implementation of Innovations}: 
+    \begin{itemize}
+        \item First 5 items: Zihan Yang
+        \item Last 3 items: Yuming Fang
+    \end{itemize}
+    \item \textbf{Real-world Demonstration}: Yueran Wang
+    \item \textbf{Experiment Testing \& Evaluation}: Zihan Yang
+    \item \textbf{Paper Writing \& Formatting}: Yuming Fang, Zihan Yang
+    \item \textbf{Homepage \& GitHub Setup}: Zihan Yang
+\end{itemize}
+
 \end{document}
