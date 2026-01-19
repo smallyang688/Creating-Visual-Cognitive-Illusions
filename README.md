@@ -157,7 +157,5 @@ python auto_closed_loop.py
 
 ⭐ **如果这个项目对你有帮助，请给我们一个star！** ⭐
 
-本项目由北京大学计算机视觉课程学生完成，致力于探索视觉认知错觉的生成与应用。
-
 Made with ❤️ for Computer Vision</content>
 </xai:function_call">撰写一个完整的README.md文件
