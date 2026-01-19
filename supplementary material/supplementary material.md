@@ -74,6 +74,7 @@ Creating-Visual-Cognitive-Illusion/
 │   └── Orthogonal Voxel Projection Synthesis/ # 正交体素投影合成
 │       └── cube.ipynb
 ├── report/                            # 项目报告文件
+│   ├── report.pdf                     # 编译完成的PDF报告
 │   └── report_source/                 # LaTeX源码和资源文件
 │       ├── figures/                   # 报告中使用的所有图片和图表
 │       ├── neurips_2024.tex           # 主要的LaTeX文档
