@@ -82,4 +82,3 @@ Creating-Visual-Cognitive-Illusion/
 ⭐ **如果这个项目对你有帮助，请给我们一个star！** ⭐
 
 Made with ❤️ for Computer Vision</content>
-</xai:function_call">撰写一个完整的README.md文件
