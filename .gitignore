@@ -33,4 +33,5 @@ notes/seamless_examples
 *.bbl
 *.blg
 *.pdf
+!report/report.pdf
 pdflatex*.fls
